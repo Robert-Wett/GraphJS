@@ -60,3 +60,26 @@ graph.prototype.getVertex = function(key) {
 graph.prototype.contains = function(vert) {
   return _.contains(vertList, vert);
 };
+
+graph.prototype.addEdge = function(f, t, cost) {
+  var nearestVert
+  ,   cost = cost || 0;
+
+  if (!_.contains(this.vertList, f)) {
+    nearestVert = this.addVertex(f);
+  }
+
+  if (!_.contains(this.vertList, t)) {
+    nearestVert = this.addVertex(t);
+  }
+
+  this.vertList[f].addNeighbor(this.vertList[t], cost);
+}
+
+graph.prototype.addVertices = function() {
+  return Object.keys(this.vertList);
+}
+
+graph.prototype.iterator = function() {
+  return Iterator(this.vertList);
+}
