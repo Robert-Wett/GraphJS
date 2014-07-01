@@ -74,12 +74,12 @@ graph.prototype.addEdge = function(f, t, cost) {
   }
 
   this.vertList[f].addNeighbor(this.vertList[t], cost);
-}
+};
 
 graph.prototype.addVertices = function() {
   return Object.keys(this.vertList);
-}
+};
 
 graph.prototype.iterator = function() {
   return Iterator(this.vertList);
-}
+};
