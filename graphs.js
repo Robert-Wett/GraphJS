@@ -121,5 +121,34 @@ if (process.argv[2] === "1") {
       console.log(util.format("( %s , %s )", vert.getId(), v));
     });
   });
+}
+else if (process.argv[2] === "2") {
 
+  var fs = require('fs');
+    , lines
+    , dictArray = [];
+
+  lines = fs.readFileSync('./reduced-brit-a-z.txt', 'utf8').split('\n');
+  _.map(lines, function(line) {
+    dictArray.push(line);
+  });
+
+  function buildGraph(wordBank) {
+    var d = {}
+      , g = new Graph()
+      , wLen
+      , bucket;
+
+    _.each(wordBank, function(word) {
+      _.each(word.split(""), function(c, idx) {
+        bucket = word.slice(0, idx) + '_' + word.slice((idx+1), word.length);
+        if (!!d[bucket]) {
+          d[bucket].push(word);
+        }
+        else {
+          d[bucket] = [word];
+        }
+      });
+    });
+  }
 }
