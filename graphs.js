@@ -1,3 +1,6 @@
+var  util = require('util')
+  ,  _    = require('underscore')
+
 /*
                   __           
  _   _____  _____/ /____  _  __
@@ -7,28 +10,35 @@
                                
 */
 
-var vertex = function(id, connectedTo) {
+var Vertex = function(id, connectedTo) {
   this.id = id;
-  connectedTo = {};
+  this.connectedTo = {};
 };
 
-vertex.prototype.addNeighbor = function(neighbor, weight) {
+Vertex.prototype.addNeighbor = function(neighbor, weight) {
   this.connectedTo[neighbor] = weight;
 };
 
-vertex.prototype.toString = function() {
-  return this.id + ' connected to ' + _.map(connectedTo, function(entry) { return entry.id; });
+Vertex.prototype.toString = function() {
+  var _string = this.id + ' connected to '
+    , connected = [];
+
+  _.map(this.connectedTo, function(entry) {
+    _string += " " + entry;
+  });
+
+  return _string;
 };
 
-vertex.prototype.getConnections = function() {
-  return Object.keys(this.connectedTo);
+Vertex.prototype.getConnections = function() {
+  return this.connectedTo;
 };
 
-vertex.prototype.getId = function() {
-  return self.id;
+Vertex.prototype.getId = function() {
+  return this.id;
 };
 
-vertex.prototype.getWeight = function(neighbor) {
+Vertex.prototype.getWeight = function(neighbor) {
   return this.connectedTo[neighbor];
 };
 
@@ -41,45 +51,69 @@ vertex.prototype.getWeight = function(neighbor) {
 /____/          /_/            
 */
 
-var graph = function() {
+var Graph = function() {
   this.vertList = {};
   this.numVertices = 0;
 };
 
-graph.prototype.addVertex = function(key) {
+Graph.prototype.addVertex = function(key) {
   this.numVertices++;
   var newVertex = new Vertex(key);
   this.vertList[key] = newVertex;
   return newVertex;
 };
 
-graph.prototype.getVertex = function(key) {
+Graph.prototype.getVertex = function(key) {
   return this.vertList[key];
 };
 
-graph.prototype.contains = function(vert) {
-  return _.contains(vertList, vert);
+Graph.prototype.contains = function(vert) {
+  return !!this.vertList[vert];
 };
 
-graph.prototype.addEdge = function(f, t, cost) {
+Graph.prototype.addEdge = function(f, t, cost) {
   var nearestVert
   ,   cost = cost || 0;
 
-  if (!_.contains(this.vertList, f)) {
+  if (!this.contains(f)) {
     nearestVert = this.addVertex(f);
   }
 
-  if (!_.contains(this.vertList, t)) {
+  if (!this.contains(t)) {
     nearestVert = this.addVertex(t);
   }
 
   this.vertList[f].addNeighbor(this.vertList[t], cost);
 };
 
-graph.prototype.addVertices = function() {
-  return Object.keys(this.vertList);
+Graph.prototype.getVertices = function() {
+  var returnArray = [];
+  for (var key in this.vertList) {
+    returnArray.push(key);
+  }
+  return returnArray;
 };
 
-graph.prototype.iterator = function() {
-  return Iterator(this.vertList);
-};
+
+if (process.argv[2] === "1") {
+  var g = new Graph();
+  _.map([0, 1, 2, 3, 4, 5], function(num) {
+    g.addVertex(num);
+  });
+  g.addEdge(0,1,5);
+  g.addEdge(0,5,2);
+  g.addEdge(1,2,4);
+  g.addEdge(2,3,9);
+  g.addEdge(3,4,7);
+  g.addEdge(3,5,3);
+  g.addEdge(4,0,1);
+  g.addEdge(5,4,8);
+  g.addEdge(5,2,1);
+
+  _.each(g.vertList, function(vert) {
+    _.each(vert.getConnections(), function(v) {
+      console.log(util.format("( %s , %s )", vert.getId(), v));
+    });
+  });
+
+}
