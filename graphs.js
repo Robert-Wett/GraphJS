@@ -77,12 +77,12 @@ Graph.prototype.addEdge = function(f, t, cost) {
 
   if (!this.contains(f)) {
     nearestVert = this.addVertex(f);
-    console.log(nearestVert);
+    //console.log(nearestVert);
   }
 
   if (!this.contains(t)) {
     nearestVert = this.addVertex(t);
-    console.log(nearestVert);
+    //console.log(nearestVert);
   }
 
   this.vertList[f].addNeighbor(this.vertList[t], cost);
@@ -112,25 +112,31 @@ if (process.argv[2] === "1") {
   g.addEdge(5,4,8);
   g.addEdge(5,2,1);
 
+  console.log(">>   g.addEdge(0,1,5);");
+  console.log(">>   g.addEdge(0,5,2);");
+  console.log(">>   g.addEdge(1,2,4);");
+  console.log(">>   g.addEdge(2,3,9);");
+  console.log(">>   g.addEdge(3,4,7);");
+  console.log(">>   g.addEdge(3,5,3);");
+  console.log(">>   g.addEdge(4,0,1);");
+  console.log(">>   g.addEdge(5,4,8);");
+  console.log(">>   g.addEdge(5,2,1);");
+
   _.map(g.vertList, function(vert) {
-    //console.log(vert);
     _.map(vert.getConnections(), function(v) {
-      //console.log("V " + v);
-      //console.log("key " + key);
-      //console.log("list " + thing);
       console.log(util.format("( %s , %s )", vert.getId(), v));
     });
   });
 }
 else if (process.argv[2] === "2") {
 
-  var fs = require('fs');
+  var fs = require('fs')
     , lines
     , dictArray = [];
 
   lines = fs.readFileSync('./reduced-brit-a-z.txt', 'utf8').split('\n');
   _.map(lines, function(line) {
-    dictArray.push(line);
+    dictArray.push(line.trim().toUpperCase());
   });
 
   function buildGraph(wordBank) {
@@ -150,5 +156,19 @@ else if (process.argv[2] === "2") {
         }
       });
     });
+
+    _.each(Object.keys(d), function(_bucket) {
+      _.each(d[_bucket], function(word1) {
+        _.each(d[_bucket], function(word2) {
+          if (word1 !== word2) {
+            g.addEdge(word1, word2);
+          }
+        });
+      });
+    });
+
+    return g;
   }
+
+  var myGraph = buildGraph(dictArray);
 }
