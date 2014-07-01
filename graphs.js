@@ -16,7 +16,7 @@ var Vertex = function(id, connectedTo) {
 };
 
 Vertex.prototype.addNeighbor = function(neighbor, weight) {
-  this.connectedTo[neighbor] = weight;
+  this.connectedTo[neighbor.id] = weight;
 };
 
 Vertex.prototype.toString = function() {
@@ -31,7 +31,7 @@ Vertex.prototype.toString = function() {
 };
 
 Vertex.prototype.getConnections = function() {
-  return this.connectedTo;
+  return _.keys(this.connectedTo);
 };
 
 Vertex.prototype.getId = function() {
@@ -67,8 +67,8 @@ Graph.prototype.getVertex = function(key) {
   return this.vertList[key];
 };
 
-Graph.prototype.contains = function(vert) {
-  return !!this.vertList[vert];
+Graph.prototype.contains = function(key) {
+  return !!this.vertList[key];
 };
 
 Graph.prototype.addEdge = function(f, t, cost) {
@@ -77,10 +77,12 @@ Graph.prototype.addEdge = function(f, t, cost) {
 
   if (!this.contains(f)) {
     nearestVert = this.addVertex(f);
+    console.log(nearestVert);
   }
 
   if (!this.contains(t)) {
     nearestVert = this.addVertex(t);
+    console.log(nearestVert);
   }
 
   this.vertList[f].addNeighbor(this.vertList[t], cost);
@@ -110,8 +112,12 @@ if (process.argv[2] === "1") {
   g.addEdge(5,4,8);
   g.addEdge(5,2,1);
 
-  _.each(g.vertList, function(vert) {
-    _.each(vert.getConnections(), function(v) {
+  _.map(g.vertList, function(vert) {
+    //console.log(vert);
+    _.map(vert.getConnections(), function(v) {
+      //console.log("V " + v);
+      //console.log("key " + key);
+      //console.log("list " + thing);
       console.log(util.format("( %s , %s )", vert.getId(), v));
     });
   });
