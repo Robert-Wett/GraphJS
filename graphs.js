@@ -1,5 +1,5 @@
 var  util = require('util')
-  ,  _    = require('underscore')
+  ,  _    = require('underscore');
 
 /*
                   __           
@@ -11,16 +11,22 @@ var  util = require('util')
 */
 
 var Vertex = function(id, connectedTo) {
-  this.id = id;
+  this.id          = id;
   this.connectedTo = {};
+  // Container for any properties for this vertex.
+  this.props       = {};
 };
 
-Vertex.prototype.addNeighbor = function(neighbor, weight) {
+Vertex.prototype.addNeighborV1 = function(neighbor, weight) {
   this.connectedTo[neighbor.id] = weight;
 };
 
+Vertex.prototype.addNeighbor = function(neighbor, weight) {
+  this.connectedTo[neighbor] = weight;
+};
+
 Vertex.prototype.toString = function() {
-  var _string = this.id + ' connected to '
+  var _string   = this.id + ' connected to '
     , connected = [];
 
   _.map(this.connectedTo, function(entry) {
@@ -30,8 +36,13 @@ Vertex.prototype.toString = function() {
   return _string;
 };
 
-Vertex.prototype.getConnections = function() {
+Vertex.prototype.getConnectionsV1 = function() {
   return _.keys(this.connectedTo);
+  //return this.connectedTo;
+};
+
+Vertex.prototype.getConnections = function() {
+  return this.connectedTo;
 };
 
 Vertex.prototype.getId = function() {
@@ -40,6 +51,16 @@ Vertex.prototype.getId = function() {
 
 Vertex.prototype.getWeight = function(neighbor) {
   return this.connectedTo[neighbor];
+};
+
+Vertex.prototype.getProp = function(property) {
+  return this.props[property];
+};
+
+Vertex.prototype.setProp = function(property, value) {
+  if (!property)
+    return;
+  this.props[property] = value;
 };
 
 
@@ -52,14 +73,14 @@ Vertex.prototype.getWeight = function(neighbor) {
 */
 
 var Graph = function() {
-  this.vertList = {};
+  this.vertList    = {};
   this.numVertices = 0;
 };
 
 Graph.prototype.addVertex = function(key) {
-  this.numVertices++;
-  var newVertex = new Vertex(key);
+  var newVertex      = new Vertex(key);
   this.vertList[key] = newVertex;
+  this.numVertices++;
   return newVertex;
 };
 
@@ -77,25 +98,36 @@ Graph.prototype.addEdge = function(f, t, cost) {
 
   if (!this.contains(f)) {
     nearestVert = this.addVertex(f);
-    //console.log(nearestVert);
   }
 
   if (!this.contains(t)) {
     nearestVert = this.addVertex(t);
-    //console.log(nearestVert);
   }
 
   this.vertList[f].addNeighbor(this.vertList[t], cost);
 };
 
-Graph.prototype.getVertices = function() {
-  var returnArray = [];
-  for (var key in this.vertList) {
-    returnArray.push(key);
-  }
-  return returnArray;
+Graph.prototype.getVerticesV1 = function() {
+  return _.keys(this.vertList);
 };
 
+Graph.prototype.getVertices = function() {
+  return this.vertList;
+};
+
+
+function breadthFirstSearch(g, start) {
+  var queue = []
+    , currentVert;
+
+  start.setProp('distance', 0);
+  start.setProp('prev', null);
+  queue.push(start);
+  while (queue.length > 0) {
+    currentVert = queue.shift();
+    //todo
+  }
+}
 
 if (process.argv[2] === "1") {
   var g = new Graph();
@@ -112,18 +144,18 @@ if (process.argv[2] === "1") {
   g.addEdge(5,4,8);
   g.addEdge(5,2,1);
 
-  console.log(">>   g.addEdge(0,1,5);");
-  console.log(">>   g.addEdge(0,5,2);");
-  console.log(">>   g.addEdge(1,2,4);");
-  console.log(">>   g.addEdge(2,3,9);");
-  console.log(">>   g.addEdge(3,4,7);");
-  console.log(">>   g.addEdge(3,5,3);");
-  console.log(">>   g.addEdge(4,0,1);");
-  console.log(">>   g.addEdge(5,4,8);");
-  console.log(">>   g.addEdge(5,2,1);");
+  console.log(">> g.addEdge(0,1,5);");
+  console.log(">> g.addEdge(0,5,2);");
+  console.log(">> g.addEdge(1,2,4);");
+  console.log(">> g.addEdge(2,3,9);");
+  console.log(">> g.addEdge(3,4,7);");
+  console.log(">> g.addEdge(3,5,3);");
+  console.log(">> g.addEdge(4,0,1);");
+  console.log(">> g.addEdge(5,4,8);");
+  console.log(">> g.addEdge(5,2,1);");
 
   _.map(g.vertList, function(vert) {
-    _.map(vert.getConnections(), function(v) {
+    _.map(vert.getConnections(), function(v, k) {
       console.log(util.format("( %s , %s )", vert.getId(), v));
     });
   });
@@ -131,44 +163,71 @@ if (process.argv[2] === "1") {
 else if (process.argv[2] === "2") {
 
   var fs = require('fs')
-    , lines
-    , dictArray = [];
+    , bucketLists
+    , g;
 
-  lines = fs.readFileSync('./reduced-brit-a-z.txt', 'utf8').split('\n');
+  bucketLists = buildBucketLists(buildDictArray());
+  g           = buildBucketListsGraph(bucketLists);
+}
+
+/*
+    __         __                                  __  __              __    
+   / /_  ___  / /___  ___  _____   ____ ___  ___  / /_/ /_  ____  ____/ /____
+  / __ \/ _ \/ / __ \/ _ \/ ___/  / __ `__ \/ _ \/ __/ __ \/ __ \/ __  / ___/
+ / / / /  __/ / /_/ /  __/ /     / / / / / /  __/ /_/ / / / /_/ / /_/ (__  ) 
+/_/ /_/\___/_/ .___/\___/_/     /_/ /_/ /_/\___/\__/_/ /_/\____/\__,_/____/  
+            /_/                                                              
+*/
+
+/**
+ * Construct an array of words from a text file delimited with newlines.
+ * @param  {[String]} filePath [Absolute/Relative path to the text file with the word bank.]
+ * @return {[Array]}           [Array with all entries, in uppercase]
+ */
+function buildDictArray(filePath) {
+  var dictArray = []
+    , filePath  = filePath || './reduced-brit-a-z.txt'
+    , lines;
+
+  lines = fs.readFileSync(filePath, 'utf8').split('\n');
   _.map(lines, function(line) {
     dictArray.push(line.trim().toUpperCase());
   });
 
-  function buildGraph(wordBank) {
-    var d = {}
-      , g = new Graph()
-      , wLen
-      , bucket;
+  return dictArray;
+}
 
-    _.each(wordBank, function(word) {
-      _.each(word.split(""), function(c, idx) {
-        bucket = word.slice(0, idx) + '_' + word.slice((idx+1), word.length);
-        if (!!d[bucket]) {
-          d[bucket].push(word);
-        }
-        else {
-          d[bucket] = [word];
+function buildBucketLists(wordBank) {
+  var d = {}
+    , bucket;
+
+  _.each(wordBank, function(word) {
+    _.each(word.split(""), function(c, idx) {
+      bucket = word.slice(0, idx) + '_' + word.slice((idx+1), word.length);
+      if (!!d[bucket]) {
+        d[bucket].push(word);
+      }
+      else {
+        d[bucket] = [word];
+      }
+    });
+  });
+
+  return d;
+}
+
+function buildBucketListsGraph(bucketList) {
+  var g = new Graph();
+
+  _.each(Object.keys(bucketList), function(bucket) {
+    _.each(bucketList[bucket], function(word1) {
+      _.each(bucketList[bucket], function(word2) {
+        if (word1 !== word2) {
+          g.addEdge(word1, word2);
         }
       });
     });
+  });
 
-    _.each(Object.keys(d), function(_bucket) {
-      _.each(d[_bucket], function(word1) {
-        _.each(d[_bucket], function(word2) {
-          if (word1 !== word2) {
-            g.addEdge(word1, word2);
-          }
-        });
-      });
-    });
-
-    return g;
-  }
-
-  var myGraph = buildGraph(dictArray);
+  return g;
 }
