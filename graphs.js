@@ -1,6 +1,12 @@
 var  util = require('util')
   ,  _    = require('underscore');
 
+var Connection = function(id, vertex, cost) {
+  this.id = id;
+  this.vertex = vertex;
+  this.cost = cost || 0;
+}
+
 /*
                   __           
  _   _____  _____/ /____  _  __
@@ -10,50 +16,34 @@ var  util = require('util')
                                
 */
 
-var Vertex = function(id, connectedTo) {
+var Vertex = function(id, connectedTo, color) {
   this.id          = id;
   this.connectedTo = {};
   // Container for any properties for this vertex.
   this.props       = {};
+  this.props['color'] = color || 'white';
 };
 
-Vertex.prototype.addNeighborV1 = function(neighbor, weight) {
-  this.connectedTo[neighbor.id] = weight;
-};
-
-Vertex.prototype.addNeighbor = function(neighbor, weight) {
-  this.connectedTo[neighbor] = weight;
-};
-
-Vertex.prototype.toString = function() {
-  var _string   = this.id + ' connected to '
-    , connected = [];
-
-  _.map(this.connectedTo, function(entry) {
-    _string += " " + entry;
-  });
-
-  return _string;
-};
-
-Vertex.prototype.getConnectionsV1 = function() {
-  return _.keys(this.connectedTo);
-  //return this.connectedTo;
+Vertex.prototype.addNeighbor = function(connection) {
+  this.connectedTo[connection.id] = connection;
 };
 
 Vertex.prototype.getConnections = function() {
-  return this.connectedTo;
+  return _.values(this.connectedTo);
 };
+
 
 Vertex.prototype.getId = function() {
   return this.id;
 };
 
 Vertex.prototype.getWeight = function(neighbor) {
-  return this.connectedTo[neighbor];
+  return this.connectedTo[JSON.stringify(neighbor)];
 };
 
 Vertex.prototype.getProp = function(property) {
+  if (!_.has(this.props, property))
+    return -1;
   return this.props[property];
 };
 
@@ -94,7 +84,8 @@ Graph.prototype.contains = function(key) {
 
 Graph.prototype.addEdge = function(f, t, cost) {
   var nearestVert
-  ,   cost = cost || 0;
+    , connection
+    , cost = cost || 0;
 
   if (!this.contains(f)) {
     nearestVert = this.addVertex(f);
@@ -104,30 +95,20 @@ Graph.prototype.addEdge = function(f, t, cost) {
     nearestVert = this.addVertex(t);
   }
 
-  this.vertList[f].addNeighbor(this.vertList[t], cost);
-};
-
-Graph.prototype.getVerticesV1 = function() {
-  return _.keys(this.vertList);
+  connection = new Connection(t, this.vertList[t], cost);
+  this.vertList[f].addNeighbor(connection);
 };
 
 Graph.prototype.getVertices = function() {
   return this.vertList;
 };
 
-
-function breadthFirstSearch(g, start) {
-  var queue = []
-    , currentVert;
-
-  start.setProp('distance', 0);
-  start.setProp('prev', null);
-  queue.push(start);
-  while (queue.length > 0) {
-    currentVert = queue.shift();
-    //todo
-  }
-}
+/*
+.----..-.  .-..----..----.  .---. .-. .----..----. .----.
+| {_   \ \/ / | {_  | {}  }/  ___}| |{ {__  | {_  { {__  
+| {__  / /\ \ | {__ | .-. \\     }| |.-._} }| {__ .-._} }
+`----'`-'  `-'`----'`-' `-' `---' `-'`----' `----'`----' 
+*/
 
 if (process.argv[2] === "1") {
   var g = new Graph();
@@ -154,20 +135,38 @@ if (process.argv[2] === "1") {
   console.log(">> g.addEdge(5,4,8);");
   console.log(">> g.addEdge(5,2,1);");
 
-  _.map(g.vertList, function(vert) {
-    _.map(vert.getConnections(), function(v, k) {
-      console.log(util.format("( %s , %s )", vert.getId(), v));
+  _.each(g.getVertices(), function(vert) {
+    _.each(vert.getConnections(), function(connectedVert) {
+      console.log(util.format("Edge: ( %s , %s ), with cost %s",
+                              vert.getId(),
+                              connectedVert.vertex.getId(),
+                              connectedVert.cost));
     });
   });
 }
 else if (process.argv[2] === "2") {
 
-  var fs = require('fs')
+  var fs          = require('fs')
+    , seedWord    = process.argv[4] || 'FOOL'
+    , startWord   = process.argv[3] || 'SAGE'
     , bucketLists
+    , seedVertex
+    , startVertex 
     , g;
 
-  bucketLists = buildBucketLists(buildDictArray());
-  g           = buildBucketListsGraph(bucketLists);
+  if (seedWord.length !== startWord.length) {
+    seedWord = 'FOOL';
+    startWord = 'SAGE';
+  }
+
+  bucketLists  = buildBucketLists(buildDictArray());
+  g            = buildBucketListsGraph(bucketLists);
+  seedVertex   = g.getVertex(seedWord);
+  startVertex  = g.getVertex(startWord);
+
+  breadthFirstSearch(g, seedVertex);
+  console.log(util.format("\nWord Ladder: %s to %s", startWord, seedWord));
+  traverse(startVertex);
 }
 
 /*
@@ -230,4 +229,36 @@ function buildBucketListsGraph(bucketList) {
   });
 
   return g;
+}
+
+function breadthFirstSearch(g, start) {
+  var queue = []
+    , currentVert;
+
+  start.setProp('distance', 0);
+  start.setProp('prev', null);
+  queue.push(start);
+  while (queue.length > 0) {
+    currentVert = queue.shift();
+    _.each(currentVert.getConnections(), function(vert) {
+      vert = vert.vertex;
+      if (vert.getProp('color') === 'white') {
+        vert.setProp('color', 'gray');
+        vert.setProp('distance', + currentVert.getProp('distance') + 1);
+        vert.setProp('prev', currentVert);
+        queue.push(vert);
+      }
+    });
+    currentVert.setProp('color', 'black');
+  }
+}
+
+function traverse(vertex) {
+  var curNode = vertex
+    , output = "";
+  while (!!curNode) {
+    output += curNode.getId() + ' -> ';
+    curNode = curNode.getProp('prev');
+  }
+  console.log(output.substring(0, output.length -4)+"\n");
 }
