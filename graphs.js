@@ -10,9 +10,9 @@ var  util = require('util')
 */
 
 var Connection = function(id, vertex, cost) {
-  this.id = id;
+  this.id     = id;
   this.vertex = vertex;
-  this.cost = cost || 0;
+  this.cost   = cost || 0;
 };
 
 /**
@@ -160,8 +160,6 @@ Graph.prototype.getVertices = function() {
   888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP' 
 */
 
-*/
-
 if (process.argv[2] === "1") {
   var g = new Graph();
   _.map([0, 1, 2, 3, 4, 5], function(num) {
@@ -260,7 +258,27 @@ function posToNodeId(row, col, boardSize) {
 }
 
 function genLegalMoves(x, y, boardSize) {
-  // TODO
+  var newMoves    = []
+    , newX
+    , newY
+    , i
+    , moveOffsets = [(-1,-2),(-1,2),(-2,-1),(-2,1),
+                     ( 1,-2),( 1,2),( 2,-1),( 2,1)];
+
+  _.each(moveOffsets, function(coord) {
+    newX = coord[0];
+    newY = coord[1];
+    if (legalCoord(newX, boardSize) && legalCoord(newY, boardSize)) {
+      // Array instead of Tuple
+      newMoves.push([newX, newY]);
+    }
+  });
+
+  return newMoves;
+}
+
+function legalCoord(x, boardSize) {
+  return x >= 0 && x < boardSize;
 }
 
 /**
