@@ -1,19 +1,54 @@
 var  util = require('util')
   ,  _    = require('underscore');
 
+
+/*
+   dP""b8  dP"Yb  88b 88 88b 88 888888  dP""b8 888888 88  dP"Yb  88b 88 
+  dP   `" dP   Yb 88Yb88 88Yb88 88__   dP   `"   88   88 dP   Yb 88Yb88 
+  Yb      Yb   dP 88 Y88 88 Y88 88""   Yb        88   88 Yb   dP 88 Y88 
+   YboodP  YbodP  88  Y8 88  Y8 888888  YboodP   88   88  YbodP  88  Y8 
+*/
+
 var Connection = function(id, vertex, cost) {
   this.id = id;
   this.vertex = vertex;
   this.cost = cost || 0;
-}
+};
+
+/**
+ * These are short-cuts to the connection's vertex's class methods.
+ * Has to be a better way to do this...
+ */
+Connection.prototype.getWeight = function(neighbor) {
+  return this.vertex.getWeight(neighbor);
+};
+
+Connection.prototype.getId = function() {
+  return this.vertex.getId();
+};
+
+Connection.prototype.getConnections = function() {
+  return _.values(this.vertex.connectedTo);
+};
+
+Connection.prototype.getProp = function(property) {
+  if (!_.has(this.vertex.props, property))
+    return -1;
+  return this.vertex.props[property];
+};
+
+Connection.prototype.setProp = function(property, value) {
+  if (!property)
+    return;
+  this.vertex.props[property] = value;
+};
+
 
 /*
-                  __           
- _   _____  _____/ /____  _  __
-| | / / _ \/ ___/ __/ _ \| |/_/
-| |/ /  __/ /  / /_/  __/>  <  
-|___/\___/_/   \__/\___/_/|_|  
-                               
+  Yb    dP 888888 88""Yb 888888 888888 Yb  dP 
+   Yb  dP  88__   88__dP   88   88__    YbdP  
+    YbdP   88""   88"Yb    88   88""    dPYb  
+     YP    888888 88  Yb   88   888888 dP  Yb 
 */
 
 var Vertex = function(id, connectedTo, color) {
@@ -21,6 +56,8 @@ var Vertex = function(id, connectedTo, color) {
   this.connectedTo = {};
   // Container for any properties for this vertex.
   this.props       = {};
+  // Default the `color` property to `white` to denote that the
+  // node was not traversed in any way.
   this.props['color'] = color || 'white';
 };
 
@@ -32,13 +69,23 @@ Vertex.prototype.getConnections = function() {
   return _.values(this.connectedTo);
 };
 
-
 Vertex.prototype.getId = function() {
   return this.id;
 };
 
 Vertex.prototype.getWeight = function(neighbor) {
-  return this.connectedTo[JSON.stringify(neighbor)];
+  // a Vertex object was passed
+  if (typeof neighbor === "object") {
+    return this.connectedTo[neighbor.getId()];
+  }
+
+  // The ID was passed
+  if (typeof neighbor === "number") {
+    return this.connectedTo[neighbor];
+  }
+
+  // ERR
+  return -1;
 };
 
 Vertex.prototype.getProp = function(property) {
@@ -54,12 +101,12 @@ Vertex.prototype.setProp = function(property, value) {
 };
 
 
-/*                         __  
-   ____ __________ _____  / /_ 
-  / __ `/ ___/ __ `/ __ \/ __ \
- / /_/ / /  / /_/ / /_/ / / / /
- \__, /_/   \__,_/ .___/_/ /_/ 
-/____/          /_/            
+
+/*
+   dP""b8 88""Yb    db    88""Yb 88  88 
+  dP   `" 88__dP   dPYb   88__dP 88  88 
+  Yb  "88 88"Yb   dP__Yb  88"""  888888 
+   YboodP 88  Yb dP""""Yb 88     88  88 
 */
 
 var Graph = function() {
@@ -103,11 +150,16 @@ Graph.prototype.getVertices = function() {
   return this.vertList;
 };
 
+
+
+
 /*
-.----..-.  .-..----..----.  .---. .-. .----..----. .----.
-| {_   \ \/ / | {_  | {}  }/  ___}| |{ {__  | {_  { {__  
-| {__  / /\ \ | {__ | .-. \\     }| |.-._} }| {__ .-._} }
-`----'`-'  `-'`----'`-' `-' `---' `-'`----' `----'`----' 
+  888888 Yb  dP 888888 88""Yb  dP""b8 88 .dP"Y8 888888 .dP"Y8 
+  88__    YbdP  88__   88__dP dP   `" 88 `Ybo." 88__   `Ybo." 
+  88""    dPYb  88""   88"Yb  Yb      88 o.`Y8b 88""   o.`Y8b 
+  888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP' 
+*/
+
 */
 
 if (process.argv[2] === "1") {
@@ -136,47 +188,80 @@ if (process.argv[2] === "1") {
   console.log(">> g.addEdge(5,2,1);");
 
   _.each(g.getVertices(), function(vert) {
-    _.each(vert.getConnections(), function(connectedVert) {
-      console.log(util.format("Edge: ( %s , %s ), with cost %s",
+    _.each(vert.getConnections(), function(connection) {
+      console.log(util.format("%s ~> %s // weight: %s",
                               vert.getId(),
-                              connectedVert.vertex.getId(),
-                              connectedVert.cost));
+                              connection.getId(),
+                              connection.cost));
     });
   });
 }
-else if (process.argv[2] === "2") {
+else if (_.contains(["2", "bfs"], process.argv[2])) {
 
   var fs          = require('fs')
     , seedWord    = process.argv[4] || 'FOOL'
     , startWord   = process.argv[3] || 'SAGE'
     , bucketLists
     , seedVertex
-    , startVertex 
-    , g;
+    , startVertex
+    , blGraph;
 
   if (seedWord.length !== startWord.length) {
-    seedWord = 'FOOL';
+    seedWord  = 'FOOL';
     startWord = 'SAGE';
+  }
+  else {
+    seedWord  = seedWord.toUpperCase();
+    startWord = startWord.toUpperCase();
   }
 
   bucketLists  = buildBucketLists(buildDictArray());
-  g            = buildBucketListsGraph(bucketLists);
-  seedVertex   = g.getVertex(seedWord);
-  startVertex  = g.getVertex(startWord);
+  blGraph      = buildBucketListsGraph(bucketLists);
+  seedVertex   = blGraph.getVertex(seedWord);
+  startVertex  = blGraph.getVertex(startWord);
 
-  breadthFirstSearch(g, seedVertex);
+  breadthFirstSearch(blGraph, seedVertex);
   console.log(util.format("\nWord Ladder: %s to %s", startWord, seedWord));
   traverse(startVertex);
 }
+else if (_.contains(["3", "dfs"], process.argv[2])) {
+  console.log("Welcome to flavor country.");
+}
+
 
 /*
-    __         __                                  __  __              __    
-   / /_  ___  / /___  ___  _____   ____ ___  ___  / /_/ /_  ____  ____/ /____
-  / __ \/ _ \/ / __ \/ _ \/ ___/  / __ `__ \/ _ \/ __/ __ \/ __ \/ __  / ___/
- / / / /  __/ / /_/ /  __/ /     / / / / / /  __/ /_/ / / / /_/ / /_/ (__  ) 
-/_/ /_/\___/_/ .___/\___/_/     /_/ /_/ /_/\___/\__/_/ /_/\____/\__,_/____/  
-            /_/                                                              
+  88  88 888888 88     88""Yb 888888 88""Yb     8b    d8 888888 888888 88  88  dP"Yb  8888b.  .dP"Y8 
+  88  88 88__   88     88__dP 88__   88__dP     88b  d88 88__     88   88  88 dP   Yb  8I  Yb `Ybo." 
+  888888 88""   88  .o 88"""  88""   88"Yb      88YbdP88 88""     88   888888 Yb   dP  8I  dY o.`Y8b 
+  88  88 888888 88ood8 88     888888 88  Yb     88 YY 88 888888   88   88  88  YbodP  8888Y"  8bodP' 
 */
+
+function knightGraph(boardSize) {
+  var newPositions
+    , nodeId
+    , nid;
+
+  ktGraph = new Graph();
+  _.each(_.range(boardSize), function(row) {
+    _.each(_.range(boardSize), function(col) {
+      nodeId       = posToNodeId(row, col, boardSize);
+      newPositions = genLegalMoves(row, col, boardSize);
+      _.each(newPositions, function(pos) {
+        nid = posToNodeId(pos[0], pos[1], boardSize);
+        ktGraph.addEdge(nodeId, nid);
+      });
+    });
+  });
+
+}
+
+function posToNodeId(row, col, boardSize) {
+  // TODO
+}
+
+function genLegalMoves(x, y, boardSize) {
+  // TODO
+}
 
 /**
  * Construct an array of words from a text file delimited with newlines.
