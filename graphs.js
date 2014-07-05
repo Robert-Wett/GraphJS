@@ -254,7 +254,7 @@ function knightGraph(boardSize) {
 }
 
 function posToNodeId(row, col, boardSize) {
-  // TODO
+  return row + (col * boardSize);
 }
 
 function genLegalMoves(x, y, boardSize) {
