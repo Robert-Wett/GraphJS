@@ -2,6 +2,7 @@ var  util = require('util')
   ,  _    = require('underscore');
 
 
+
 /*
    dP""b8  dP"Yb  88b 88 88b 88 888888  dP""b8 888888 88  dP"Yb  88b 88 
   dP   `" dP   Yb 88Yb88 88Yb88 88__   dP   `"   88   88 dP   Yb 88Yb88 
@@ -42,6 +43,7 @@ Connection.prototype.setProp = function(property, value) {
     return;
   this.vertex.props[property] = value;
 };
+
 
 
 /*
@@ -227,6 +229,8 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
 }
 
 
+
+
 /*
   88  88 888888 88     88""Yb 888888 88""Yb     8b    d8 888888 888888 88  88  dP"Yb  8888b.  .dP"Y8 
   88  88 88__   88     88__dP 88__   88__dP     88b  d88 88__     88   88  88 dP   Yb  8I  Yb `Ybo." 
@@ -253,6 +257,32 @@ function knightGraph(boardSize) {
 
 }
 
+function knightTour(n, path, u, limit) {
+  var nbrList
+    , done = false
+    , i    = 0;
+
+  u.setProp('color', 'gray');
+  path.push(u);
+  if (n < limit) {
+    nbrList = u.getConnections();
+    for (i; i < nbrList.length && !done; i++) {
+      if (nbrList[i].getProp('color') === 'white') {
+        done = knightTour(n+1, path, nbrList[i], limit);
+      }
+    }
+    if (!done) {
+      path.shift();
+      u.setProp('color', 'white');
+    }
+  }
+  else {
+    done = true;
+  }
+
+  return done;
+}
+
 function posToNodeId(row, col, boardSize) {
   return row + (col * boardSize);
 }
@@ -262,8 +292,8 @@ function genLegalMoves(x, y, boardSize) {
     , newX
     , newY
     , i
-    , moveOffsets = [(-1,-2),(-1,2),(-2,-1),(-2,1),
-                     ( 1,-2),( 1,2),( 2,-1),( 2,1)];
+    , moveOffsets = [(-1,-2), (-1,2), (-2,-1), (-2,1),
+                     ( 1,-2), ( 1,2), ( 2,-1), ( 2,1)];
 
   _.each(moveOffsets, function(coord) {
     newX = coord[0];
