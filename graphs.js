@@ -257,6 +257,14 @@ function knightGraph(boardSize) {
 
 }
 
+/**
+ * DFS Algorithm for the `Knight's Tour` problem.
+ * @param  {[Number]} n     [Current depth in the search tree]
+ * @param  {[Array]}  path  [List of vertices visited to this point]
+ * @param  {[Vertex]} u     [Vertex in the graph we wish to explore]
+ * @param  {[Number]} limit [Number of nodes int he path]
+ * @return {[Boolean]}      [`true` if a successful tour]
+ */
 function knightTour(n, path, u, limit) {
   var nbrList
     , done = false
