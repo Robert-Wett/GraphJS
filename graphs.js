@@ -291,6 +291,36 @@ function knightTour(n, path, u, limit) {
   return done;
 }
 
+function orderByAvail(node) {
+  var resList = []
+    , retList = []
+    , c       = 0
+    , w;
+
+  _.each(node.getConnections(), function(v) {
+    if (v.getProp('color') === 'white') {
+      _.each(v.getConnections(), function(w) {
+        if (w.getProp('color') === 'white') c++;
+      });
+      resList.push([c, v]);
+    }
+  });
+
+  resList.sort(function(a, b) {
+    if (a[0] > b[0])
+      return 1;
+    if (a[0] < b[0])
+      return -1;
+    return 0;
+  });
+
+  _.each(resList, function(entry) {
+    retList.push(entry[0]);
+  });
+
+  return retList;
+}
+
 function posToNodeId(row, col, boardSize) {
   return row + (col * boardSize);
 }
