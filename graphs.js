@@ -1,232 +1,48 @@
-var  util = require('util')
-  ,  _    = require('underscore');
-
-
-
-/*
-   dP""b8  dP"Yb  88b 88 88b 88 888888  dP""b8 888888 88  dP"Yb  88b 88 
-  dP   `" dP   Yb 88Yb88 88Yb88 88__   dP   `"   88   88 dP   Yb 88Yb88 
-  Yb      Yb   dP 88 Y88 88 Y88 88""   Yb        88   88 Yb   dP 88 Y88 
-   YboodP  YbodP  88  Y8 88  Y8 888888  YboodP   88   88  YbodP  88  Y8 
-*/
-
-var Connection = function(id, vertex, cost) {
-  this.id     = id;
-  this.vertex = vertex;
-  this.cost   = cost || 0;
-};
-
-/**
- * These are short-cuts to the connection's vertex's class methods.
- * Has to be a better way to do this...
- */
-Connection.prototype.getWeight = function(neighbor) {
-  return this.vertex.getWeight(neighbor);
-};
-
-Connection.prototype.getId = function() {
-  return this.vertex.getId();
-};
-
-Connection.prototype.getConnections = function() {
-  return _.values(this.vertex.connectedTo);
-};
-
-Connection.prototype.getProp = function(property) {
-  if (!_.has(this.vertex.props, property))
-    return -1;
-  return this.vertex.props[property];
-};
-
-Connection.prototype.setProp = function(property, value) {
-  if (!property)
-    return;
-  this.vertex.props[property] = value;
-};
-
+var  util      = require('util')
+  , Graph      = require('./src/graph.js').Graph
+  , Vertex     = require('./src/graph.js').Vertex
+  , Connection = require('./src/graph.js').Connection
+  ,  _         = require('underscore');
 
 
 /*
-  Yb    dP 888888 88""Yb 888888 888888 Yb  dP 
-   Yb  dP  88__   88__dP   88   88__    YbdP  
-    YbdP   88""   88"Yb    88   88""    dPYb  
-     YP    888888 88  Yb   88   888888 dP  Yb 
+  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88 
+   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88 
+   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888 
+  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88 
 */
+function DFSGraph() {
+  this.graph = new Graph();
+  this.time     = 0;
+}
 
-var Vertex = function(id, connectedTo, color) {
-  this.id          = id;
-  this.connectedTo = {};
-  // Container for any properties for this vertex.
-  this.props       = {};
-  // Default the `color` property to `white` to denote that the
-  // node was not traversed in any way.
-  this.props['color'] = color || 'white';
-};
-
-Vertex.prototype.addNeighbor = function(connection) {
-  this.connectedTo[connection.id] = connection;
-};
-
-Vertex.prototype.getConnections = function() {
-  return _.values(this.connectedTo);
-};
-
-Vertex.prototype.getId = function() {
-  return this.id;
-};
-
-Vertex.prototype.getWeight = function(neighbor) {
-  // a Vertex object was passed
-  if (typeof neighbor === "object") {
-    return this.connectedTo[neighbor.getId()];
-  }
-
-  // The ID was passed
-  if (typeof neighbor === "number") {
-    return this.connectedTo[neighbor];
-  }
-
-  // ERR
-  return -1;
-};
-
-Vertex.prototype.getProp = function(property) {
-  if (!_.has(this.props, property))
-    return -1;
-  return this.props[property];
-};
-
-Vertex.prototype.setProp = function(property, value) {
-  if (!property)
-    return;
-  this.props[property] = value;
-};
-
-
-
-/*
-   dP""b8 88""Yb    db    88""Yb 88  88 
-  dP   `" 88__dP   dPYb   88__dP 88  88 
-  Yb  "88 88"Yb   dP__Yb  88"""  888888 
-   YboodP 88  Yb dP""""Yb 88     88  88 
-*/
-
-var Graph = function() {
-  this.vertList    = {};
-  this.numVertices = 0;
-};
-
-Graph.prototype.addVertex = function(key) {
-  var newVertex      = new Vertex(key);
-  this.vertList[key] = newVertex;
-  this.numVertices++;
-  return newVertex;
-};
-
-Graph.prototype.getVertex = function(key) {
-  return this.vertList[key];
-};
-
-Graph.prototype.contains = function(key) {
-  return !!this.vertList[key];
-};
-
-Graph.prototype.addEdge = function(f, t, cost) {
-  var nearestVert
-    , connection
-    , cost = cost || 0;
-
-  if (!this.contains(f)) {
-    nearestVert = this.addVertex(f);
-  }
-
-  if (!this.contains(t)) {
-    nearestVert = this.addVertex(t);
-  }
-
-  connection = new Connection(t, this.vertList[t], cost);
-  this.vertList[f].addNeighbor(connection);
-};
-
-Graph.prototype.getVertices = function() {
-  return this.vertList;
-};
-
-
-
-
-/*
-  888888 Yb  dP 888888 88""Yb  dP""b8 88 .dP"Y8 888888 .dP"Y8 
-  88__    YbdP  88__   88__dP dP   `" 88 `Ybo." 88__   `Ybo." 
-  88""    dPYb  88""   88"Yb  Yb      88 o.`Y8b 88""   o.`Y8b 
-  888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP' 
-*/
-
-if (process.argv[2] === "1") {
-  var g = new Graph();
-  _.map([0, 1, 2, 3, 4, 5], function(num) {
-    g.addVertex(num);
+DFSGraph.prototype.dfs = function() {
+  _.each(this.graph.vertexList, function(aVertex) {
+    aVertex.setProp('color', 'white');
+    aVertex.setProp('prev', -1);
   });
-  g.addEdge(0,1,5);
-  g.addEdge(0,5,2);
-  g.addEdge(1,2,4);
-  g.addEdge(2,3,9);
-  g.addEdge(3,4,7);
-  g.addEdge(3,5,3);
-  g.addEdge(4,0,1);
-  g.addEdge(5,4,8);
-  g.addEdge(5,2,1);
 
-  console.log(">> g.addEdge(0,1,5);");
-  console.log(">> g.addEdge(0,5,2);");
-  console.log(">> g.addEdge(1,2,4);");
-  console.log(">> g.addEdge(2,3,9);");
-  console.log(">> g.addEdge(3,4,7);");
-  console.log(">> g.addEdge(3,5,3);");
-  console.log(">> g.addEdge(4,0,1);");
-  console.log(">> g.addEdge(5,4,8);");
-  console.log(">> g.addEdge(5,2,1);");
-
-  _.each(g.getVertices(), function(vert) {
-    _.each(vert.getConnections(), function(connection) {
-      console.log(util.format("%s ~> %s // weight: %s",
-                              vert.getId(),
-                              connection.getId(),
-                              connection.cost));
-    });
+  _.each(this.graph.vertexList, function(aVertex) {
+    if (aVertex.getProp('color') === 'white') {
+      dfsvisit(aVertex);
+    }
   });
-}
-else if (_.contains(["2", "bfs"], process.argv[2])) {
+};
 
-  var fs          = require('fs')
-    , seedWord    = process.argv[4] || 'FOOL'
-    , startWord   = process.argv[3] || 'SAGE'
-    , bucketLists
-    , seedVertex
-    , startVertex
-    , blGraph;
-
-  if (seedWord.length !== startWord.length) {
-    seedWord  = 'FOOL';
-    startWord = 'SAGE';
-  }
-  else {
-    seedWord  = seedWord.toUpperCase();
-    startWord = startWord.toUpperCase();
-  }
-
-  bucketLists  = buildBucketLists(buildDictArray());
-  blGraph      = buildBucketListsGraph(bucketLists);
-  seedVertex   = blGraph.getVertex(seedWord);
-  startVertex  = blGraph.getVertex(startWord);
-
-  breadthFirstSearch(blGraph, seedVertex);
-  console.log(util.format("\nWord Ladder: %s to %s", startWord, seedWord));
-  traverse(startVertex);
-}
-else if (_.contains(["3", "dfs"], process.argv[2])) {
-  console.log("Welcome to flavor country.");
-}
+DFSGraph.prototype.dfsvisit = function(startVertex) {
+  startVertex.setProp('color', 'white');
+  self.time++;
+  startVertex.setProp('discovery', self.time);
+  _.each(startVertex.getConnections(), function(nextVertex) {
+    if (nextVertex.getProp('color') === 'white') {
+      nextVertex.setProp('prev', startVertex);
+      dfsvisit(nextVertex);
+    }
+  });
+  startVertex.setProp('color', 'black');
+  self.time++;
+  startVertex.setProp('finish', self.time);
+};
 
 
 
@@ -238,6 +54,15 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
   88  88 888888 88ood8 88     888888 88  Yb     88 YY 88 888888   88   88  88  YbodP  8888Y"  8bodP' 
 */
 
+
+/*
+    __         _       __    __          __                  
+   / /______  (_)___ _/ /_  / /______   / /_____  __  _______
+  / //_/ __ \/ / __ `/ __ \/ __/ ___/  / __/ __ \/ / / / ___/
+ / ,< / / / / / /_/ / / / / /_(__  )  / /_/ /_/ / /_/ / /    
+/_/|_/_/ /_/_/\__, /_/ /_/\__/____/   \__/\____/\__,_/_/     
+             /____/                                          
+*/
 function knightGraph(boardSize) {
   var newPositions
     , nodeId
@@ -255,15 +80,16 @@ function knightGraph(boardSize) {
     });
   });
 
+  return ktGraph;
 }
 
 /**
  * DFS Algorithm for the `Knight's Tour` problem.
- * @param  {[Number]} n     [Current depth in the search tree]
- * @param  {[Array]}  path  [List of vertices visited to this point]
- * @param  {[Vertex]} u     [Vertex in the graph we wish to explore]
- * @param  {[Number]} limit [Number of nodes int he path]
- * @return {[Boolean]}      [`true` if a successful tour]
+ * @param  {Number}   n       Current depth in the search tree
+ * @param  {Array}    path    List of vertices visited to this point
+ * @param  {Vertex}   u       Vertex in the graph we wish to explore
+ * @param  {Number}   limit   Number of nodes int he path
+ * @return {Boolean}         `true` if a successful tour
  */
 function knightTour(n, path, u, limit) {
   var nbrList
@@ -321,6 +147,7 @@ function orderByAvail(node) {
   return retList;
 }
 
+
 function posToNodeId(row, col, boardSize) {
   return row + (col * boardSize);
 }
@@ -330,12 +157,12 @@ function genLegalMoves(x, y, boardSize) {
     , newX
     , newY
     , i
-    , moveOffsets = [(-1,-2), (-1,2), (-2,-1), (-2,1),
-                     ( 1,-2), ( 1,2), ( 2,-1), ( 2,1)];
+    , moveOffsets = [[-1,-2], [-1,2], [-2,-1], [-2,1],
+                     [ 1,-2], [ 1,2], [ 2,-1], [ 2,1]];
 
   _.each(moveOffsets, function(coord) {
-    newX = coord[0];
-    newY = coord[1];
+    newX = x + coord[0];
+    newY = y + coord[1];
     if (legalCoord(newX, boardSize) && legalCoord(newY, boardSize)) {
       // Array instead of Tuple
       newMoves.push([newX, newY]);
@@ -349,10 +176,20 @@ function legalCoord(x, boardSize) {
   return x >= 0 && x < boardSize;
 }
 
+
+/*
+                          __   __          __    __         
+ _      ______  _________/ /  / /___ _____/ /___/ /__  _____
+| | /| / / __ \/ ___/ __  /  / / __ `/ __  / __  / _ \/ ___/
+| |/ |/ / /_/ / /  / /_/ /  / / /_/ / /_/ / /_/ /  __/ /    
+|__/|__/\____/_/   \__,_/  /_/\__,_/\__,_/\__,_/\___/_/     
+                                                            
+*/
+
 /**
  * Construct an array of words from a text file delimited with newlines.
- * @param  {[String]} filePath [Absolute/Relative path to the text file with the word bank.]
- * @return {[Array]}           [Array with all entries, in uppercase]
+ * @param  {String} filePath  Absolute/Relative path to the text file with the word bank.
+ * @return {Array}            Array with all entries, in uppercase.
  */
 function buildDictArray(filePath) {
   var dictArray = []
@@ -433,3 +270,81 @@ function traverse(vertex) {
   }
   console.log(output.substring(0, output.length -4)+"\n");
 }
+
+
+
+
+
+/*
+  888888 Yb  dP 888888 88""Yb  dP""b8 88 .dP"Y8 888888 .dP"Y8 
+  88__    YbdP  88__   88__dP dP   `" 88 `Ybo." 88__   `Ybo." 
+  88""    dPYb  88""   88"Yb  Yb      88 o.`Y8b 88""   o.`Y8b 
+  888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP' 
+*/
+
+if (process.argv[2] === "1") {
+  var g = new Graph();
+  _.map([0, 1, 2, 3, 4, 5], function(num) {
+    g.addVertex(num);
+  });
+  g.addEdge(0,1,5);
+  g.addEdge(0,5,2);
+  g.addEdge(1,2,4);
+  g.addEdge(2,3,9);
+  g.addEdge(3,4,7);
+  g.addEdge(3,5,3);
+  g.addEdge(4,0,1);
+  g.addEdge(5,4,8);
+  g.addEdge(5,2,1);
+
+  console.log(">> g.addEdge(0,1,5);");
+  console.log(">> g.addEdge(0,5,2);");
+  console.log(">> g.addEdge(1,2,4);");
+  console.log(">> g.addEdge(2,3,9);");
+  console.log(">> g.addEdge(3,4,7);");
+  console.log(">> g.addEdge(3,5,3);");
+  console.log(">> g.addEdge(4,0,1);");
+  console.log(">> g.addEdge(5,4,8);");
+  console.log(">> g.addEdge(5,2,1);");
+
+  _.each(g.getVertices(), function(vert) {
+    _.each(vert.getConnections(), function(connection) {
+      console.log(util.format("%s ~> %s // weight: %s",
+                              vert.getId(),
+                              connection.getId(),
+                              connection.cost));
+    });
+  });
+}
+else if (_.contains(["2", "bfs"], process.argv[2])) {
+
+  var fs          = require('fs')
+    , seedWord    = process.argv[4] || 'FOOL'
+    , startWord   = process.argv[3] || 'SAGE'
+    , bucketLists
+    , seedVertex
+    , startVertex
+    , blGraph;
+
+  if (seedWord.length !== startWord.length) {
+    seedWord  = 'FOOL';
+    startWord = 'SAGE';
+  }
+  else {
+    seedWord  = seedWord.toUpperCase();
+    startWord = startWord.toUpperCase();
+  }
+
+  bucketLists  = buildBucketLists(buildDictArray());
+  blGraph      = buildBucketListsGraph(bucketLists);
+  seedVertex   = blGraph.getVertex(seedWord);
+  startVertex  = blGraph.getVertex(startWord);
+
+  breadthFirstSearch(blGraph, seedVertex);
+  console.log(util.format("\nWord Ladder: %s to %s", startWord, seedWord));
+  traverse(startVertex);
+}
+else if (_.contains(["3", "dfs"], process.argv[2])) {
+  var g = knightGraph(8);
+}
+
