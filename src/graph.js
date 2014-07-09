@@ -147,6 +147,25 @@ Graph.prototype.getVertices = function() {
   return this.vertList;
 };
 
+Graph.prototype.allNodesSet = function(property, value) {
+  var traversed    = true
+    , numNotSet    = 0
+    , nodesVisited = []
+    , property     = property || 'color'
+    , value        = value    || 'gray';
+
+  _.each(this.vertList, function(v) {
+    if (v.getProp(property) === value) {
+      nodesVisited.push(v);
+    } else {
+      traversed = false;
+      numNotSet++;
+    }
+  });
+
+  return traversed;
+}
+
 exports.Graph      = Graph;
 exports.Vertex     = Vertex;
 exports.Connection = Connection;

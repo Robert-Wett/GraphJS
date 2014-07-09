@@ -48,20 +48,20 @@ DFSGraph.prototype.dfsvisit = function(startVertex) {
 
 
 /*
-  88  88 888888 88     88""Yb 888888 88""Yb     8b    d8 888888 888888 88  88  dP"Yb  8888b.  .dP"Y8 
-  88  88 88__   88     88__dP 88__   88__dP     88b  d88 88__     88   88  88 dP   Yb  8I  Yb `Ybo." 
-  888888 88""   88  .o 88"""  88""   88"Yb      88YbdP88 88""     88   888888 Yb   dP  8I  dY o.`Y8b 
-  88  88 888888 88ood8 88     888888 88  Yb     88 YY 88 888888   88   88  88  YbodP  8888Y"  8bodP' 
+  88  88 888888 88     88""Yb 888888 88""Yb     8b    d8 888888 888888 88  88  dP"Yb  8888b.  .dP"Y8
+  88  88 88__   88     88__dP 88__   88__dP     88b  d88 88__     88   88  88 dP   Yb  8I  Yb `Ybo."
+  888888 88""   88  .o 88"""  88""   88"Yb      88YbdP88 88""     88   888888 Yb   dP  8I  dY o.`Y8b
+  88  88 888888 88ood8 88     888888 88  Yb     88 YY 88 888888   88   88  88  YbodP  8888Y"  8bodP'
 */
 
 
 /*
-    __         _       __    __          __                  
+    __         _       __    __          __
    / /______  (_)___ _/ /_  / /______   / /_____  __  _______
   / //_/ __ \/ / __ `/ __ \/ __/ ___/  / __/ __ \/ / / / ___/
- / ,< / / / / / /_/ / / / / /_(__  )  / /_/ /_/ / /_/ / /    
-/_/|_/_/ /_/_/\__, /_/ /_/\__/____/   \__/\____/\__,_/_/     
-             /____/                                          
+ / ,< / / / / / /_/ / / / / /_(__  )  / /_/ /_/ / /_/ / /
+/_/|_/_/ /_/_/\__, /_/ /_/\__/____/   \__/\____/\__,_/_/
+             /____/
 */
 function knightGraph(boardSize) {
   var newPositions
@@ -88,7 +88,7 @@ function knightGraph(boardSize) {
  * @param  {Number}   n       Current depth in the search tree
  * @param  {Array}    path    List of vertices visited to this point
  * @param  {Vertex}   u       Vertex in the graph we wish to explore
- * @param  {Number}   limit   Number of nodes int he path
+ * @param  {Number}   limit   Number of nodes in the path
  * @return {Boolean}         `true` if a successful tour
  */
 function knightTour(n, path, u, limit) {
@@ -98,15 +98,22 @@ function knightTour(n, path, u, limit) {
 
   u.setProp('color', 'gray');
   path.push(u);
+  if (u.getProp('visited') === -1) {
+    u.setProp('visited', 1);
+  } else {
+    u.setProp('visited', u.getProp('visited') + 1);
+  }
+
+  console.log(util.format("%s Checking out Node %s", Array(n+1).join(">"), u.getId()));
   if (n < limit) {
-    nbrList = u.getConnections();
+    nbrList = orderByAvail(u);
     for (i; i < nbrList.length && !done; i++) {
       if (nbrList[i].getProp('color') === 'white') {
         done = knightTour(n+1, path, nbrList[i], limit);
       }
     }
     if (!done) {
-      path.shift();
+      path.pop();
       u.setProp('color', 'white');
     }
   }
@@ -141,7 +148,7 @@ function orderByAvail(node) {
   });
 
   _.each(resList, function(entry) {
-    retList.push(entry[0]);
+    retList.push(entry[1]);
   });
 
   return retList;
@@ -178,12 +185,11 @@ function legalCoord(x, boardSize) {
 
 
 /*
-                          __   __          __    __         
+                          __   __          __    __
  _      ______  _________/ /  / /___ _____/ /___/ /__  _____
 | | /| / / __ \/ ___/ __  /  / / __ `/ __  / __  / _ \/ ___/
-| |/ |/ / /_/ / /  / /_/ /  / / /_/ / /_/ / /_/ /  __/ /    
-|__/|__/\____/_/   \__,_/  /_/\__,_/\__,_/\__,_/\___/_/     
-                                                            
+| |/ |/ / /_/ / /  / /_/ /  / / /_/ / /_/ / /_/ /  __/ /
+|__/|__/\____/_/   \__,_/  /_/\__,_/\__,_/\__,_/\___/_/
 */
 
 /**
@@ -276,10 +282,10 @@ function traverse(vertex) {
 
 
 /*
-  888888 Yb  dP 888888 88""Yb  dP""b8 88 .dP"Y8 888888 .dP"Y8 
-  88__    YbdP  88__   88__dP dP   `" 88 `Ybo." 88__   `Ybo." 
-  88""    dPYb  88""   88"Yb  Yb      88 o.`Y8b 88""   o.`Y8b 
-  888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP' 
+  888888 Yb  dP 888888 88""Yb  dP""b8 88 .dP"Y8 888888 .dP"Y8
+  88__    YbdP  88__   88__dP dP   `" 88 `Ybo." 88__   `Ybo."
+  88""    dPYb  88""   88"Yb  Yb      88 o.`Y8b 88""   o.`Y8b
+  888888 dP  Yb 888888 88  Yb  YboodP 88 8bodP' 888888 8bodP'
 */
 
 if (process.argv[2] === "1") {
@@ -335,16 +341,29 @@ else if (_.contains(["2", "bfs"], process.argv[2])) {
     startWord = startWord.toUpperCase();
   }
 
-  bucketLists  = buildBucketLists(buildDictArray());
-  blGraph      = buildBucketListsGraph(bucketLists);
-  seedVertex   = blGraph.getVertex(seedWord);
-  startVertex  = blGraph.getVertex(startWord);
+  bucketLists = buildBucketLists(buildDictArray());
+  blGraph     = buildBucketListsGraph(bucketLists);
+  seedVertex  = blGraph.getVertex(seedWord);
+  startVertex = blGraph.getVertex(startWord);
 
   breadthFirstSearch(blGraph, seedVertex);
   console.log(util.format("\nWord Ladder: %s to %s", startWord, seedWord));
   traverse(startVertex);
 }
 else if (_.contains(["3", "dfs"], process.argv[2])) {
-  var g = knightGraph(8);
-}
+  var limit  = process.argv[3] || 63
+    , visits = 0
+    , g      = knightGraph(6);
 
+  knightTour(0, [], g.getVertex(0), limit);
+  _.each(g.vertList, function(vertex) {
+    console.log(util.format("Vertex (%s) was visited %s times", vertex.getId(), vertex.getProp('visited')));
+    visits += vertex.getProp('visited');
+  });
+  console.log(util.format("There were a total of %s moves taken", visits));
+  if (g.allNodesSet('color', 'white')) {
+    console.log("Successfully traversed");
+  } else {
+    console.log("Limit Reached");
+  }
+}
