@@ -6,10 +6,10 @@ var  util      = require('util')
 
 
 /*
-  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88 
-   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88 
-   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888 
-  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88 
+  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88
+   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88
+   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888
+  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88
 */
 function DFSGraph() {
   this.graph = new Graph();
@@ -104,7 +104,9 @@ function knightTour(n, path, u, limit) {
     u.setProp('visited', u.getProp('visited') + 1);
   }
 
-  console.log(util.format("%s Checking out Node %s", Array(n+1).join(">"), u.getId()));
+  console.log(util.format("%s Checking out Node %s",
+                          Array(n+1).join(">"),
+                          u.getId()));
   if (n < limit) {
     done = false;
     nbrList = orderByAvail(u);
@@ -197,7 +199,8 @@ function legalCoord(x, boardSize) {
 
 /**
  * Construct an array of words from a text file delimited with newlines.
- * @param  {String} filePath  Absolute/Relative path to the text file with the word bank.
+ * @param  {String} filePath  Absolute/Relative path to the text file with the
+ *                            word bank.
  * @return {Array}            Array with all entries, in uppercase.
  */
 function buildDictArray(filePath) {
@@ -359,14 +362,17 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
     , g      = knightGraph(8);
 
   knightTour(0, [], g.getVertex(0), limit);
+
   _.each(g.vertList, function(vertex) {
-    console.log(util.format("Vertex (%s) was visited %s times", vertex.getId(), vertex.getProp('visited')));
+    console.log(util.format("Vertex (%s) was visited %s times",
+                            vertex.getId(),
+                            vertex.getProp('visited')));
     visits += vertex.getProp('visited');
   });
   console.log(util.format("There were a total of %s moves taken", visits));
   if (g.allNodesSet('color', 'gray')) {
     console.log("Successfully traversed");
   } else {
-    console.log("Something fudged up..the limit was reached before traversal.");
+    console.log("Limit was reached before full traversal!");
   }
 }
