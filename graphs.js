@@ -93,8 +93,8 @@ function knightGraph(boardSize) {
  */
 function knightTour(n, path, u, limit) {
   var nbrList
-    , done = false
-    , i    = 0;
+    , done
+    , i = 0;
 
   u.setProp('color', 'gray');
   path.push(u);
@@ -106,6 +106,7 @@ function knightTour(n, path, u, limit) {
 
   console.log(util.format("%s Checking out Node %s", Array(n+1).join(">"), u.getId()));
   if (n < limit) {
+    done = false;
     nbrList = orderByAvail(u);
     for (i; i < nbrList.length && !done; i++) {
       if (nbrList[i].getProp('color') === 'white') {
@@ -127,13 +128,15 @@ function knightTour(n, path, u, limit) {
 function orderByAvail(node) {
   var resList = []
     , retList = []
-    , c       = 0
+    , c
     , w;
 
   _.each(node.getConnections(), function(v) {
     if (v.getProp('color') === 'white') {
+      c = 0;
       _.each(v.getConnections(), function(w) {
-        if (w.getProp('color') === 'white') c++;
+        if (w.getProp('color') === 'white')
+          c++;
       });
       resList.push([c, v]);
     }
@@ -353,7 +356,7 @@ else if (_.contains(["2", "bfs"], process.argv[2])) {
 else if (_.contains(["3", "dfs"], process.argv[2])) {
   var limit  = process.argv[3] || 63
     , visits = 0
-    , g      = knightGraph(6);
+    , g      = knightGraph(8);
 
   knightTour(0, [], g.getVertex(0), limit);
   _.each(g.vertList, function(vertex) {
@@ -361,9 +364,9 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
     visits += vertex.getProp('visited');
   });
   console.log(util.format("There were a total of %s moves taken", visits));
-  if (g.allNodesSet('color', 'white')) {
+  if (g.allNodesSet('color', 'gray')) {
     console.log("Successfully traversed");
   } else {
-    console.log("Limit Reached");
+    console.log("Something fudged up..the limit was reached before traversal.");
   }
 }

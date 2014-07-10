@@ -155,11 +155,8 @@ Graph.prototype.allNodesSet = function(property, value) {
     , value        = value    || 'gray';
 
   _.each(this.vertList, function(v) {
-    if (v.getProp(property) === value) {
-      nodesVisited.push(v);
-    } else {
+    if (v.getProp(property) !== value) {
       traversed = false;
-      numNotSet++;
     }
   });
 
