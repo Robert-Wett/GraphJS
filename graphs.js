@@ -354,19 +354,36 @@ else if (_.contains(["2", "bfs"], process.argv[2])) {
   traverse(startVertex);
 }
 else if (_.contains(["3", "dfs"], process.argv[2])) {
-  var limit  = process.argv[3] || 63
-    , visits = 0
-    , g      = knightGraph(8);
+  /**
+   * Changing this so that we can pass an object with
+   * params defined so we don't have to worry about ordinal stuffs
+   *
+   * Example CLI:
+   * <code>node graphs.js 3 '{"search":"smart", "size":"8", "limit":"63", "start":"4"}'</code>
+   * <code>node graphs.js 3 '{"search":"brute", "size":"4"}'</code>
+   * <code>node graphs.js dfs '{"search":"smart", "size":"10"}'</code>
+   * <code>node graphs.js dfs '{"search":"brute", "size":"6"}'</code>
+   */
+  var args        = JSON.parse(process.argv[3])
+    , searchType  = args.search || "smart"
+    , boardSize   = args.size   || 8
+    , limit       = args.limit  || (boardSize * 2) - 1
+    , startVertex = args.start  || 0
+    , visits      = 0
+    , g           = knightGraph(boardSize);
 
   knightTour(0, [], g.getVertex(0), limit);
   _.each(g.vertList, function(vertex) {
     console.log(util.format("Vertex (%s) was visited %s times", vertex.getId(), vertex.getProp('visited')));
     visits += vertex.getProp('visited');
   });
+
   console.log(util.format("There were a total of %s moves taken", visits));
   if (g.allNodesSet('color', 'gray')) {
     console.log("Successfully traversed");
   } else {
     console.log("Something fudged up..the limit was reached before traversal.");
   }
+} else {
+  console.log(JSON.parse(process.argv[2]).something);
 }
