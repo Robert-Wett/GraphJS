@@ -6,10 +6,10 @@ var  util      = require('util')
 
 
 /*
-  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88 
-   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88 
-   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888 
-  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88 
+  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88
+   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88
+   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888
+  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88
 */
 function DFSGraph() {
   this.graph = new Graph();
@@ -104,13 +104,57 @@ function knightTour(n, path, u, limit) {
     u.setProp('visited', u.getProp('visited') + 1);
   }
 
-  console.log(util.format("%s Checking out Node %s", Array(n+1).join(">"), u.getId()));
+  console.log(util.format("%s Checking out Node %s",
+                          Array(n+1).join(">"),
+                          u.getId()));
   if (n < limit) {
     done = false;
     nbrList = orderByAvail(u);
     for (i; i < nbrList.length && !done; i++) {
       if (nbrList[i].getProp('color') === 'white') {
         done = knightTour(n+1, path, nbrList[i], limit);
+      }
+    }
+    if (!done) {
+      path.pop();
+      u.setProp('color', 'white');
+    }
+  }
+  else {
+    done = true;
+  }
+
+  return done;
+}
+
+function knightTourBrute(n, path, u, limit) {
+  var nbrList
+    , done
+    , i = 0;
+
+  u.setProp('color', 'gray');
+  path.push(u);
+  if (u.getProp('visited') === -1) {
+    u.setProp('visited', 1);
+  } else {
+    u.setProp('visited', u.getProp('visited') + 1);
+  }
+
+  console.log(util.format("%s Checking out Node %s",
+                          Array(n+1).join(">"),
+                          u.getId()));
+  if (n < limit) {
+    done = false;
+    /**
+     * This is the single difference between the brute force
+     * method and the normal method, which uses Warnsdorff’s Algo
+     * to pick nodes that have the least amount of edges first.
+     */
+    //nbrList = orderByAvail(u);
+    nbrList = u.getConnections();
+    for (i; i < nbrList.length && !done; i++) {
+      if (nbrList[i].getProp('color') === 'white') {
+        done = knightTourBrute(n+1, path, nbrList[i], limit);
       }
     }
     if (!done) {
@@ -197,7 +241,8 @@ function legalCoord(x, boardSize) {
 
 /**
  * Construct an array of words from a text file delimited with newlines.
- * @param  {String} filePath  Absolute/Relative path to the text file with the word bank.
+ * @param  {String} filePath  Absolute/Relative path to the text file with the
+ *                            word bank.
  * @return {Array}            Array with all entries, in uppercase.
  */
 function buildDictArray(filePath) {
@@ -364,17 +409,26 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
    * <code>node graphs.js dfs '{"search":"smart", "size":"10"}'</code>
    * <code>node graphs.js dfs '{"search":"brute", "size":"6"}'</code>
    */
-  var args        = JSON.parse(process.argv[3])
+  var args        = JSON.parse(process.argv[3] || '{}')
     , searchType  = args.search || "smart"
     , boardSize   = args.size   || 8
-    , limit       = args.limit  || (boardSize * 2) - 1
+    , limit       = args.limit  || (boardSize * boardSize) - 1
     , startVertex = args.start  || 0
+    , testSwitch  = args.test   || false
     , visits      = 0
     , g           = knightGraph(boardSize);
 
-  knightTour(0, [], g.getVertex(0), limit);
+  if (searchType === "brute") {
+    knightTourBrute(0, [], g.getVertex(startVertex), limit);
+  }
+  else {
+    knightTour(0, [], g.getVertex(startVertex), limit);
+  }
+
   _.each(g.vertList, function(vertex) {
-    console.log(util.format("Vertex (%s) was visited %s times", vertex.getId(), vertex.getProp('visited')));
+    console.log(util.format("Vertex (%s) was visited %s times",
+                            vertex.getId(),
+                            vertex.getProp('visited')));
     visits += vertex.getProp('visited');
   });
 
@@ -382,8 +436,6 @@ else if (_.contains(["3", "dfs"], process.argv[2])) {
   if (g.allNodesSet('color', 'gray')) {
     console.log("Successfully traversed");
   } else {
-    console.log("Something fudged up..the limit was reached before traversal.");
+    console.log("Limit was reached before full traversal!");
   }
-} else {
-  console.log(JSON.parse(process.argv[2]).something);
 }
