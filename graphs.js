@@ -5,47 +5,6 @@ var  util      = require('util')
   ,  _         = require('underscore');
 
 
-/*
-  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88
-   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88
-   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888
-  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88
-*/
-function DFSGraph() {
-  this.graph = new Graph();
-  this.time     = 0;
-}
-
-DFSGraph.prototype.dfs = function() {
-  _.each(this.graph.vertexList, function(aVertex) {
-    aVertex.setProp('color', 'white');
-    aVertex.setProp('prev', -1);
-  });
-
-  _.each(this.graph.vertexList, function(aVertex) {
-    if (aVertex.getProp('color') === 'white') {
-      dfsvisit(aVertex);
-    }
-  });
-};
-
-DFSGraph.prototype.dfsvisit = function(startVertex) {
-  startVertex.setProp('color', 'white');
-  self.time++;
-  startVertex.setProp('discovery', self.time);
-  _.each(startVertex.getConnections(), function(nextVertex) {
-    if (nextVertex.getProp('color') === 'white') {
-      nextVertex.setProp('prev', startVertex);
-      dfsvisit(nextVertex);
-    }
-  });
-  startVertex.setProp('color', 'black');
-  self.time++;
-  startVertex.setProp('finish', self.time);
-};
-
-
-
 
 /*
   88  88 888888 88     88""Yb 888888 88""Yb     8b    d8 888888 888888 88  88  dP"Yb  8888b.  .dP"Y8
