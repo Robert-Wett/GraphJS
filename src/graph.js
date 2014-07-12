@@ -108,6 +108,7 @@ Vertex.prototype.setProp = function(property, value) {
 */
 var Graph = function() {
   this.vertList    = {};
+  this.properties  = {};
   this.numVertices = 0;
 };
 
@@ -145,6 +146,14 @@ Graph.prototype.addEdge = function(f, t, cost) {
 
 Graph.prototype.getVertices = function() {
   return this.vertList;
+};
+
+Graph.prototype.getProp = function(property) {
+  return this.properties[property];
+};
+
+Graph.prototype.setProp = function(property, value) {
+  this.properties[property] = value;
 };
 
 Graph.prototype.allNodesSet = function(property, value) {

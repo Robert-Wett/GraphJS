@@ -1,0 +1,15 @@
+$ node graphs.js 2
+
+Word Ladder: SAGE to FOOL
+SAGE -> SALE -> PALE -> PALL -> POLL -> POOL -> FOOL
+
+$ node graphs.js 2 graph butts
+
+Word Ladder: GRAPH to BUTTS
+GRAPH -> GRAPE -> GRADE -> GRADS -> GOADS -> GOATS -> BOATS -> BEATS -> BENTS -> BUNTS -> BUTTS
+
+$ node graphs.js 2 dick butt
+
+Word Ladder: DICK to BUTT
+DICK -> DINK -> DINT -> BINT -> BUNT -> BUTT
+

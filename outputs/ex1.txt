@@ -1,0 +1,20 @@
+$ node graphs.js 1
+
+>> g.addEdge(0,1,5);
+>> g.addEdge(0,5,2);
+>> g.addEdge(1,2,4);
+>> g.addEdge(2,3,9);
+>> g.addEdge(3,4,7);
+>> g.addEdge(3,5,3);
+>> g.addEdge(4,0,1);
+>> g.addEdge(5,4,8);
+>> g.addEdge(5,2,1);
+0 ~> 1 // weight: 5
+0 ~> 5 // weight: 2
+1 ~> 2 // weight: 4
+2 ~> 3 // weight: 9
+3 ~> 4 // weight: 7
+3 ~> 5 // weight: 3
+4 ~> 0 // weight: 1
+5 ~> 2 // weight: 1
+5 ~> 4 // weight: 8

@@ -1,4 +1,4 @@
-var  util      = require('util')
+var util       = require('util')
   , Graph      = require('./src/graph.js').Graph
   , Vertex     = require('./src/graph.js').Vertex
   , Connection = require('./src/graph.js').Connection
@@ -206,7 +206,7 @@ function legalCoord(x, boardSize) {
  */
 function buildDictArray(filePath) {
   var dictArray = []
-    , filePath  = filePath || './reduced-brit-a-z.txt'
+    , filePath  = filePath || './data/reduced-brit-a-z.txt'
     , lines;
 
   lines = fs.readFileSync(filePath, 'utf8').split('\n');

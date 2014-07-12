@@ -1,0 +1,580 @@
+$ node graphs.js 3
+
+ Checking out Node 0
+> Checking out Node 10
+>> Checking out Node 4
+>>> Checking out Node 14
+>>>> Checking out Node 31
+>>>>> Checking out Node 46
+>>>>>> Checking out Node 63
+>>>>>>> Checking out Node 53
+>>>>>>>> Checking out Node 47
+>>>>>>>>> Checking out Node 62
+>>>>>>>>>> Checking out Node 52
+>>>>>>>>>>> Checking out Node 58
+>>>>>>>>>>>> Checking out Node 48
+>>>>>>>>>>>>> Checking out Node 33
+>>>>>>>>>>>>>> Checking out Node 16
+>>>>>>>>>>>>>>> Checking out Node 1
+>>>>>>>>>>>>>>>> Checking out Node 11
+>>>>>>>>>>>>>>>>> Checking out Node 5
+>>>>>>>>>>>>>>>>>> Checking out Node 15
+>>>>>>>>>>>>>>>>>>> Checking out Node 21
+>>>>>>>>>>>>>>>>>>>> Checking out Node 6
+>>>>>>>>>>>>>>>>>>>>> Checking out Node 23
+>>>>>>>>>>>>>>>>>>>>>> Checking out Node 38
+>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 55
+>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 61
+>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 51
+>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 57
+>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 40
+>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 25
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 8
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 2
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 17
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 32
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 42
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 59
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 49
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 34
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 24
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 9
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 3
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 18
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 12
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 27
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 44
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 29
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 19
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 36
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 26
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 41
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 56
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 50
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 35
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 20
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 30
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 13
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 7
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 22
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 28
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 43
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 37
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 54
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 39
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 45
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 60
+Vertex (0) was visited 1 times
+Vertex (1) was visited 1 times
+Vertex (2) was visited 1 times
+Vertex (3) was visited 1 times
+Vertex (4) was visited 1 times
+Vertex (5) was visited 1 times
+Vertex (6) was visited 1 times
+Vertex (7) was visited 1 times
+Vertex (8) was visited 1 times
+Vertex (9) was visited 1 times
+Vertex (10) was visited 1 times
+Vertex (11) was visited 1 times
+Vertex (12) was visited 1 times
+Vertex (13) was visited 1 times
+Vertex (14) was visited 1 times
+Vertex (15) was visited 1 times
+Vertex (16) was visited 1 times
+Vertex (17) was visited 1 times
+Vertex (18) was visited 1 times
+Vertex (19) was visited 1 times
+Vertex (20) was visited 1 times
+Vertex (21) was visited 1 times
+Vertex (22) was visited 1 times
+Vertex (23) was visited 1 times
+Vertex (24) was visited 1 times
+Vertex (25) was visited 1 times
+Vertex (26) was visited 1 times
+Vertex (27) was visited 1 times
+Vertex (28) was visited 1 times
+Vertex (29) was visited 1 times
+Vertex (30) was visited 1 times
+Vertex (31) was visited 1 times
+Vertex (32) was visited 1 times
+Vertex (33) was visited 1 times
+Vertex (34) was visited 1 times
+Vertex (35) was visited 1 times
+Vertex (36) was visited 1 times
+Vertex (37) was visited 1 times
+Vertex (38) was visited 1 times
+Vertex (39) was visited 1 times
+Vertex (40) was visited 1 times
+Vertex (41) was visited 1 times
+Vertex (42) was visited 1 times
+Vertex (43) was visited 1 times
+Vertex (44) was visited 1 times
+Vertex (45) was visited 1 times
+Vertex (46) was visited 1 times
+Vertex (47) was visited 1 times
+Vertex (48) was visited 1 times
+Vertex (49) was visited 1 times
+Vertex (50) was visited 1 times
+Vertex (51) was visited 1 times
+Vertex (52) was visited 1 times
+Vertex (53) was visited 1 times
+Vertex (54) was visited 1 times
+Vertex (55) was visited 1 times
+Vertex (56) was visited 1 times
+Vertex (57) was visited 1 times
+Vertex (58) was visited 1 times
+Vertex (59) was visited 1 times
+Vertex (60) was visited 1 times
+Vertex (61) was visited 1 times
+Vertex (62) was visited 1 times
+Vertex (63) was visited 1 times
+There were a total of 64 moves taken
+Successfully traversed
+
+$ node graphs.js 3 '{"search":"brute", "size":"4"}'
+/* Most output removed for brevity */
+>>>>>>>>> Checking out Node 4
+>>>>>>>>>> Checking out Node 2
+>>>>>>> Checking out Node 14
+>>>>>>>> Checking out Node 7
+>>>>>>>>> Checking out Node 1
+>>>>>>>>>> Checking out Node 8
+>>>>>>>>>> Checking out Node 10
+>>>>>>>>>>> Checking out Node 3
+>>>>>>>>>>> Checking out Node 4
+>>>>>>>>>>>> Checking out Node 2
+>>>>>>>>>>> Checking out Node 12
+>>>>>>>> Checking out Node 8
+>>>>>>>>> Checking out Node 1
+>>>>>>>>>> Checking out Node 7
+>>>>>>>>>> Checking out Node 1
+>>>>>>>>>>> Checking out Node
+>>>>>>>>>>> Checking out Node 4
+>>>>>>>>>>>> Checking out Node 2
+>>>>>>>>>>> Checking out Node 12
+Vertex (0) was visited 1 times
+Vertex (1) was visited 154 times
+Vertex (2) was visited 160 times
+Vertex (3) was visited 208 times
+Vertex (4) was visited 154 times
+Vertex (5) was visited 136 times
+Vertex (6) was visited 70 times
+Vertex (7) was visited 160 times
+Vertex (8) was visited 160 times
+Vertex (9) was visited 70 times
+Vertex (10) was visited 136 times
+Vertex (11) was visited 154 times
+Vertex (12) was visited 208 times
+Vertex (13) was visited 160 times
+Vertex (14) was visited 154 times
+Vertex (15) was visited 138 times
+There were a total of 2223 moves taken
+Limit reached
+
+
+$ node graphs.js 3 '{"search":"brute", "limit":"10", "size":"10", "start":"50"}'
+ Checking out Node 50
+> Checking out Node 31
+>> Checking out Node 10
+>>> Checking out Node 2
+>>>> Checking out Node 14
+>>>>> Checking out Node 6
+>>>>>> Checking out Node 18
+>>>>>>> Checking out Node 26
+>>>>>>>> Checking out Node 5
+>>>>>>>>> Checking out Node 13
+>>>>>>>>>> Checking out Node 1
+Vertex (0) was visited -1 times
+Vertex (1) was visited 1 times
+Vertex (2) was visited 1 times
+Vertex (3) was visited -1 times
+Vertex (4) was visited -1 times
+Vertex (5) was visited 1 times
+Vertex (6) was visited 1 times
+Vertex (7) was visited -1 times
+Vertex (8) was visited -1 times
+Vertex (9) was visited -1 times
+Vertex (10) was visited 1 times
+Vertex (11) was visited -1 times
+Vertex (12) was visited -1 times
+Vertex (13) was visited 1 times
+Vertex (14) was visited 1 times
+Vertex (15) was visited -1 times
+Vertex (16) was visited -1 times
+Vertex (17) was visited -1 times
+Vertex (18) was visited 1 times
+Vertex (19) was visited -1 times
+Vertex (20) was visited -1 times
+Vertex (21) was visited -1 times
+Vertex (22) was visited -1 times
+Vertex (23) was visited -1 times
+Vertex (24) was visited -1 times
+Vertex (25) was visited -1 times
+Vertex (26) was visited 1 times
+Vertex (27) was visited -1 times
+Vertex (28) was visited -1 times
+Vertex (29) was visited -1 times
+Vertex (30) was visited -1 times
+Vertex (31) was visited 1 times
+Vertex (32) was visited -1 times
+Vertex (33) was visited -1 times
+Vertex (34) was visited -1 times
+Vertex (35) was visited -1 times
+Vertex (36) was visited -1 times
+Vertex (37) was visited -1 times
+Vertex (38) was visited -1 times
+Vertex (39) was visited -1 times
+Vertex (40) was visited -1 times
+Vertex (41) was visited -1 times
+Vertex (42) was visited -1 times
+Vertex (43) was visited -1 times
+Vertex (44) was visited -1 times
+Vertex (45) was visited -1 times
+Vertex (46) was visited -1 times
+Vertex (47) was visited -1 times
+Vertex (48) was visited -1 times
+Vertex (49) was visited -1 times
+Vertex (50) was visited 1 times
+Vertex (51) was visited -1 times
+Vertex (52) was visited -1 times
+Vertex (53) was visited -1 times
+Vertex (54) was visited -1 times
+Vertex (55) was visited -1 times
+Vertex (56) was visited -1 times
+Vertex (57) was visited -1 times
+Vertex (58) was visited -1 times
+Vertex (59) was visited -1 times
+Vertex (60) was visited -1 times
+Vertex (61) was visited -1 times
+Vertex (62) was visited -1 times
+Vertex (63) was visited -1 times
+Vertex (64) was visited -1 times
+Vertex (65) was visited -1 times
+Vertex (66) was visited -1 times
+Vertex (67) was visited -1 times
+Vertex (68) was visited -1 times
+Vertex (69) was visited -1 times
+Vertex (70) was visited -1 times
+Vertex (71) was visited -1 times
+Vertex (72) was visited -1 times
+Vertex (73) was visited -1 times
+Vertex (74) was visited -1 times
+Vertex (75) was visited -1 times
+Vertex (76) was visited -1 times
+Vertex (77) was visited -1 times
+Vertex (78) was visited -1 times
+Vertex (79) was visited -1 times
+Vertex (80) was visited -1 times
+Vertex (81) was visited -1 times
+Vertex (82) was visited -1 times
+Vertex (83) was visited -1 times
+Vertex (84) was visited -1 times
+Vertex (85) was visited -1 times
+Vertex (86) was visited -1 times
+Vertex (87) was visited -1 times
+Vertex (88) was visited -1 times
+Vertex (89) was visited -1 times
+Vertex (90) was visited -1 times
+Vertex (91) was visited -1 times
+Vertex (92) was visited -1 times
+Vertex (93) was visited -1 times
+Vertex (94) was visited -1 times
+Vertex (95) was visited -1 times
+Vertex (96) was visited -1 times
+Vertex (97) was visited -1 times
+Vertex (98) was visited -1 times
+Vertex (99) was visited -1 times
+There were a total of -78 moves taken
+Limit was reached before full traversal!
+
+$ node graphs.js 3 '{"size":"12", "start":"50"}'
+ Checking out Node 50
+> Checking out Node 36
+>> Checking out Node 13
+>>> Checking out Node 3
+>>>> Checking out Node 17
+>>>>> Checking out Node 7
+>>>>>> Checking out Node 21
+>>>>>>> Checking out Node 11
+>>>>>>>> Checking out Node 34
+>>>>>>>>> Checking out Node 9
+>>>>>>>>>> Checking out Node 23
+>>>>>>>>>>> Checking out Node 46
+>>>>>>>>>>>> Checking out Node 71
+>>>>>>>>>>>>> Checking out Node 94
+>>>>>>>>>>>>>> Checking out Node 119
+>>>>>>>>>>>>>>> Checking out Node 142
+>>>>>>>>>>>>>>>> Checking out Node 128
+>>>>>>>>>>>>>>>>> Checking out Node 138
+>>>>>>>>>>>>>>>>>> Checking out Node 124
+>>>>>>>>>>>>>>>>>>> Checking out Node 134
+>>>>>>>>>>>>>>>>>>>> Checking out Node 120
+>>>>>>>>>>>>>>>>>>>>> Checking out Node 97
+>>>>>>>>>>>>>>>>>>>>>> Checking out Node 72
+>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 49
+>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 24
+>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 1
+>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 26
+>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 12
+>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 2
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 16
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 6
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 20
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 10
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 35
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 58
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 83
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 69
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 59
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 45
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 22
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 8
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 31
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 41
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 27
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 4
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 18
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 32
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 55
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 30
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 5
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 15
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 25
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 0
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 14
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 37
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 60
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 74
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 84
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 61
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 51
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 28
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 38
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 48
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 73
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 96
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 121
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 135
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 110
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 133
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 108
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 85
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 62
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 39
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 29
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 19
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 44
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 54
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 40
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 63
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 53
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 43
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 33
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 47
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 57
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 82
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 68
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 78
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 64
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 87
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 77
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 52
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 42
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 67
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 92
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 106
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 131
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 141
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 118
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 143
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 129
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 139
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 125
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 111
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 86
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 109
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 132
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 122
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 136
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 126
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 101
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 76
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 99
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 113
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 88
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 65
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 75
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 98
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 123
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 100
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 90
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 115
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 140
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 117
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 107
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 130
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 105
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 95
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 70
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 80
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 103
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 93
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 116
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 91
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 66
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 56
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 81
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 104
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 79
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 89
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 114
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 137
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 112
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 102
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking out Node 127
+Vertex (0) was visited 1 times
+Vertex (1) was visited 1 times
+Vertex (2) was visited 1 times
+Vertex (3) was visited 1 times
+Vertex (4) was visited 1 times
+Vertex (5) was visited 1 times
+Vertex (6) was visited 1 times
+Vertex (7) was visited 1 times
+Vertex (8) was visited 1 times
+Vertex (9) was visited 1 times
+Vertex (10) was visited 1 times
+Vertex (11) was visited 1 times
+Vertex (12) was visited 1 times
+Vertex (13) was visited 1 times
+Vertex (14) was visited 1 times
+Vertex (15) was visited 1 times
+Vertex (16) was visited 1 times
+Vertex (17) was visited 1 times
+Vertex (18) was visited 1 times
+Vertex (19) was visited 1 times
+Vertex (20) was visited 1 times
+Vertex (21) was visited 1 times
+Vertex (22) was visited 1 times
+Vertex (23) was visited 1 times
+Vertex (24) was visited 1 times
+Vertex (25) was visited 1 times
+Vertex (26) was visited 1 times
+Vertex (27) was visited 1 times
+Vertex (28) was visited 1 times
+Vertex (29) was visited 1 times
+Vertex (30) was visited 1 times
+Vertex (31) was visited 1 times
+Vertex (32) was visited 1 times
+Vertex (33) was visited 1 times
+Vertex (34) was visited 1 times
+Vertex (35) was visited 1 times
+Vertex (36) was visited 1 times
+Vertex (37) was visited 1 times
+Vertex (38) was visited 1 times
+Vertex (39) was visited 1 times
+Vertex (40) was visited 1 times
+Vertex (41) was visited 1 times
+Vertex (42) was visited 1 times
+Vertex (43) was visited 1 times
+Vertex (44) was visited 1 times
+Vertex (45) was visited 1 times
+Vertex (46) was visited 1 times
+Vertex (47) was visited 1 times
+Vertex (48) was visited 1 times
+Vertex (49) was visited 1 times
+Vertex (50) was visited 1 times
+Vertex (51) was visited 1 times
+Vertex (52) was visited 1 times
+Vertex (53) was visited 1 times
+Vertex (54) was visited 1 times
+Vertex (55) was visited 1 times
+Vertex (56) was visited 1 times
+Vertex (57) was visited 1 times
+Vertex (58) was visited 1 times
+Vertex (59) was visited 1 times
+Vertex (60) was visited 1 times
+Vertex (61) was visited 1 times
+Vertex (62) was visited 1 times
+Vertex (63) was visited 1 times
+Vertex (64) was visited 1 times
+Vertex (65) was visited 1 times
+Vertex (66) was visited 1 times
+Vertex (67) was visited 1 times
+Vertex (68) was visited 1 times
+Vertex (69) was visited 1 times
+Vertex (70) was visited 1 times
+Vertex (71) was visited 1 times
+Vertex (72) was visited 1 times
+Vertex (73) was visited 1 times
+Vertex (74) was visited 1 times
+Vertex (75) was visited 1 times
+Vertex (76) was visited 1 times
+Vertex (77) was visited 1 times
+Vertex (78) was visited 1 times
+Vertex (79) was visited 1 times
+Vertex (80) was visited 1 times
+Vertex (81) was visited 1 times
+Vertex (82) was visited 1 times
+Vertex (83) was visited 1 times
+Vertex (84) was visited 1 times
+Vertex (85) was visited 1 times
+Vertex (86) was visited 1 times
+Vertex (87) was visited 1 times
+Vertex (88) was visited 1 times
+Vertex (89) was visited 1 times
+Vertex (90) was visited 1 times
+Vertex (91) was visited 1 times
+Vertex (92) was visited 1 times
+Vertex (93) was visited 1 times
+Vertex (94) was visited 1 times
+Vertex (95) was visited 1 times
+Vertex (96) was visited 1 times
+Vertex (97) was visited 1 times
+Vertex (98) was visited 1 times
+Vertex (99) was visited 1 times
+Vertex (100) was visited 1 times
+Vertex (101) was visited 1 times
+Vertex (102) was visited 1 times
+Vertex (103) was visited 1 times
+Vertex (104) was visited 1 times
+Vertex (105) was visited 1 times
+Vertex (106) was visited 1 times
+Vertex (107) was visited 1 times
+Vertex (108) was visited 1 times
+Vertex (109) was visited 1 times
+Vertex (110) was visited 1 times
+Vertex (111) was visited 1 times
+Vertex (112) was visited 1 times
+Vertex (113) was visited 1 times
+Vertex (114) was visited 1 times
+Vertex (115) was visited 1 times
+Vertex (116) was visited 1 times
+Vertex (117) was visited 1 times
+Vertex (118) was visited 1 times
+Vertex (119) was visited 1 times
+Vertex (120) was visited 1 times
+Vertex (121) was visited 1 times
+Vertex (122) was visited 1 times
+Vertex (123) was visited 1 times
+Vertex (124) was visited 1 times
+Vertex (125) was visited 1 times
+Vertex (126) was visited 1 times
+Vertex (127) was visited 1 times
+Vertex (128) was visited 1 times
+Vertex (129) was visited 1 times
+Vertex (130) was visited 1 times
+Vertex (131) was visited 1 times
+Vertex (132) was visited 1 times
+Vertex (133) was visited 1 times
+Vertex (134) was visited 1 times
+Vertex (135) was visited 1 times
+Vertex (136) was visited 1 times
+Vertex (137) was visited 1 times
+Vertex (138) was visited 1 times
+Vertex (139) was visited 1 times
+Vertex (140) was visited 1 times
+Vertex (141) was visited 1 times
+Vertex (142) was visited 1 times
+Vertex (143) was visited 1 times
+There were a total of 144 moves taken
+Successfully traversed
