@@ -1,0 +1,149 @@
+$ node djikstraChallenge.js
+
+Id:  A
+Connected to B with cost of  39
+Connected to V with cost of  57
+Connected to W with cost of  18
+
+Id:  B
+Connected to A with cost of  39
+Connected to O with cost of  94
+Connected to V with cost of  74
+Connected to W with cost of  86
+
+Id:  V
+Connected to A with cost of  57
+Connected to B with cost of  74
+Connected to O with cost of  33
+Connected to W with cost of  26
+
+Id:  W
+Connected to A with cost of  18
+Connected to B with cost of  86
+Connected to V with cost of  26
+Connected to Z with cost of  62
+
+Id:  O
+Connected to B with cost of  94
+Connected to T with cost of  74
+Connected to V with cost of  33
+Connected to Z with cost of  50
+
+Id:  C
+Connected to D with cost of  86
+Connected to K with cost of  52
+Connected to M with cost of  51
+Connected to P with cost of  33
+
+Id:  D
+Connected to C with cost of  86
+Connected to K with cost of  82
+Connected to L with cost of  31
+Connected to R with cost of  51
+
+Id:  K
+Connected to C with cost of  52
+Connected to D with cost of  82
+Connected to R with cost of  64
+Connected to Y with cost of  73
+
+Id:  M
+Connected to C with cost of  51
+Connected to N with cost of  28
+Connected to P with cost of  14
+Connected to U with cost of  32
+
+Id:  P
+Connected to C with cost of  33
+Connected to M with cost of  14
+Connected to N with cost of  33
+Connected to Q with cost of  50
+
+Id:  L
+Connected to D with cost of  31
+Connected to R with cost of  81
+Connected to X with cost of  44
+Connected to Y with cost of  97
+
+Id:  R
+Connected to D with cost of  51
+Connected to K with cost of  64
+Connected to L with cost of  81
+Connected to X with cost of  74
+
+Id:  E
+Connected to F with cost of  81
+Connected to H with cost of  78
+Connected to I with cost of  20
+Connected to J with cost of  39
+
+Id:  F
+Connected to E with cost of  81
+Connected to H with cost of  48
+Connected to Q with cost of  81
+Connected to S with cost of  83
+
+Id:  H
+Connected to E with cost of  78
+Connected to F with cost of  48
+Connected to I with cost of  63
+Connected to J with cost of  35
+
+Id:  I
+Connected to E with cost of  20
+Connected to H with cost of  63
+Connected to J with cost of  95
+Connected to Q with cost of  75
+
+Id:  J
+Connected to E with cost of  39
+Connected to H with cost of  35
+Connected to I with cost of  95
+Connected to Q with cost of  48
+
+Id:  Q
+Connected to F with cost of  81
+Connected to I with cost of  75
+Connected to J with cost of  48
+Connected to P with cost of  50
+
+Id:  S
+Connected to F with cost of  83
+Connected to X with cost of  87
+Connected to Y with cost of  32
+
+Id:  G
+Connected to N with cost of  18
+Connected to U with cost of  92
+
+Id:  N
+Connected to G with cost of  18
+Connected to M with cost of  28
+Connected to P with cost of  33
+Connected to U with cost of  59
+
+Id:  U
+Connected to G with cost of  92
+Connected to M with cost of  32
+Connected to N with cost of  59
+
+Id:  Y
+Connected to K with cost of  73
+Connected to L with cost of  97
+Connected to S with cost of  32
+
+Id:  X
+Connected to L with cost of  44
+Connected to R with cost of  74
+Connected to S with cost of  87
+Connected to T with cost of  79
+
+Id:  T
+Connected to O with cost of  74
+Connected to X with cost of  79
+Connected to Z with cost of  38
+
+Id:  Z
+Connected to O with cost of  50
+Connected to T with cost of  38
+Connected to W with cost of  62
