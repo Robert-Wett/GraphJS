@@ -4,10 +4,10 @@ var  util      = require('util')
 
 
 /*
-   dP""b8  dP"Yb  88b 88 88b 88 888888  dP""b8 888888 88  dP"Yb  88b 88 
-  dP   `" dP   Yb 88Yb88 88Yb88 88__   dP   `"   88   88 dP   Yb 88Yb88 
-  Yb      Yb   dP 88 Y88 88 Y88 88""   Yb        88   88 Yb   dP 88 Y88 
-   YboodP  YbodP  88  Y8 88  Y8 888888  YboodP   88   88  YbodP  88  Y8 
+   dP""b8  dP"Yb  88b 88 88b 88 888888  dP""b8 888888 88  dP"Yb  88b 88
+  dP   `" dP   Yb 88Yb88 88Yb88 88__   dP   `"   88   88 dP   Yb 88Yb88
+  Yb      Yb   dP 88 Y88 88 Y88 88""   Yb        88   88 Yb   dP 88 Y88
+   YboodP  YbodP  88  Y8 88  Y8 888888  YboodP   88   88  YbodP  88  Y8
 */
 var Connection = function(id, vertex, cost) {
   this.id     = id;
@@ -45,10 +45,10 @@ Connection.prototype.setProp = function(property, value) {
 
 
 /*
-  Yb    dP 888888 88""Yb 888888 888888 Yb  dP 
-   Yb  dP  88__   88__dP   88   88__    YbdP  
-    YbdP   88""   88"Yb    88   88""    dPYb  
-     YP    888888 88  Yb   88   888888 dP  Yb 
+  Yb    dP 888888 88""Yb 888888 888888 Yb  dP
+   Yb  dP  88__   88__dP   88   88__    YbdP
+    YbdP   88""   88"Yb    88   88""    dPYb
+     YP    888888 88  Yb   88   888888 dP  Yb
 */
 var Vertex = function(id, connectedTo, color) {
   this.id          = id;
@@ -101,10 +101,10 @@ Vertex.prototype.setProp = function(property, value) {
 
 
 /*
-   dP""b8 88""Yb    db    88""Yb 88  88 
-  dP   `" 88__dP   dPYb   88__dP 88  88 
-  Yb  "88 88"Yb   dP__Yb  88"""  888888 
-   YboodP 88  Yb dP""""Yb 88     88  88 
+   dP""b8 88""Yb    db    88""Yb 88  88
+  dP   `" 88__dP   dPYb   88__dP 88  88
+  Yb  "88 88"Yb   dP__Yb  88"""  888888
+   YboodP 88  Yb dP""""Yb 88     88  88
 */
 var Graph = function() {
   this.vertList    = {};
@@ -163,6 +163,68 @@ Graph.prototype.allNodesSet = function(property, value) {
   return traversed;
 }
 
+/*
+  8888b.  888888 .dP"Y8      dP""b8 88""Yb    db    88""Yb 88  88
+   8I  Yb 88__   `Ybo."     dP   `" 88__dP   dPYb   88__dP 88  88
+   8I  dY 88""   o.`Y8b     Yb  "88 88"Yb   dP__Yb  88"""  888888
+  8888Y"  88     8bodP'      YboodP 88  Yb dP""""Yb 88     88  88
+*/
+function DFSGraph() {
+  this.graph = new Graph();
+  this.time  = 0;
+}
+
+DFSGraph.prototype.dfs = function() {
+  _.each(this.graph.vertexList, function(aVertex) {
+    aVertex.setProp('color', 'white');
+    aVertex.setProp('prev', -1);
+  });
+
+  _.each(this.graph.vertexList, function(aVertex) {
+    if (aVertex.getProp('color') === 'white') {
+      dfsvisit(aVertex);
+    }
+  });
+};
+
+DFSGraph.prototype.dfsvisit = function(startVertex) {
+  startVertex.setProp('color', 'white');
+  self.time++;
+  startVertex.setProp('discovery', self.time);
+  _.each(startVertex.getConnections(), function(nextVertex) {
+    if (nextVertex.getProp('color') === 'white') {
+      nextVertex.setProp('prev', startVertex);
+      dfsvisit(nextVertex);
+    }
+  });
+  startVertex.setProp('color', 'black');
+  self.time++;
+  startVertex.setProp('finish', self.time);
+};
+
+// Return the nodes in decreasing order of finish time
+DFSGraph.prototype.getTopological = function() {
+  var sortList = [];
+  if (Object.keys(this.vertexList).length === 0)
+    return sortList;
+
+  _.each(this.vertexList, function(vertex) {
+    sortList.push([vertex.getProp('finish'), vertex]);
+  });
+
+  sortList.sort(function(a, b) {
+    if (a[0] > b[0])
+      return 1;
+    if (a[0] < b[0])
+      return -1;
+    return 0;
+  });
+
+  return sortList;
+};
+
+
 exports.Graph      = Graph;
 exports.Vertex     = Vertex;
 exports.Connection = Connection;
+exports.DFSGraph   = DFSGraph;
