@@ -13,6 +13,7 @@ var Connection = function(id, vertex, cost) {
   this.id     = id;
   this.vertex = vertex;
   this.cost   = cost || 0;
+  this.vertex.setProp('cost', cost);
 };
 /**
  * These are short-cuts to the connection's vertex's class methods.

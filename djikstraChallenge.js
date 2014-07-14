@@ -1,9 +1,9 @@
 var fs         = require('fs')
   , _          = require('underscore')
-  , program    = require('commander')
   , Graph      = require('./src/graph.js').Graph
   , Vertex     = require('./src/graph.js').Vertex
-  , Connection = require('./src/graph.js').Connection;
+  , Connection = require('./src/graph.js').Connection
+  , BinaryHeap = require("./src/binheap.js").BinaryHeap;
 
 var buildGraphFromInput = function(path, callback) {
   var filePath = path || './input.txt'
@@ -47,17 +47,37 @@ var buildGraphFromInput = function(path, callback) {
   });
 }
 
+function djikstra(graph, start) {
+  var currentVert
+    , newDist;
+
+  var pq = new BinHeap(function(element) {
+    return element.getProp('cost');
+  });
+
+  // Build the heap
+  _.each(graph.vertList, function(vert) {
+    pq.push(vert);
+  });
+
+  while (pq.size() > 0) {
+    currentVert = pq.pop();
+    start.setProp('distance', 0);
+
+    _.each(currentVert.getConnections(), function(nextVert) {
+      newDist = currentVert.getProp('distance') + currentVert.getProp('cost');
+      if (newDist < nextVert.getProp('distance')) {
+        nextVert.setProp('cost', newDist);
+        nextVert.setProp('prev', currentVert);
+      }
+    });
+  }
+}
+
 
 buildGraphFromInput("./data/largeinput.txt", function(g) {
-  _.each(g.vertList, function(vert) {
-    console.log("\nId: ", vert.getId());
-
-    _.each(vert.getConnections(), function(con) {
-      console.log("Connected to", con.getId(), "with cost of ", con.cost);
-    });
-  });
+  djikstra(g, g.getVertex(g.getProp('start')));
 });
-
 
 /*
 // Non-callback implementation
